@@ -1,9 +1,17 @@
 <script setup lang="ts">
 import { RouterView } from "vue-router";
+import HeaderComponent from "./components/HeaderComponent.vue";
 </script>
 
 <template>
-  <RouterView />
+  <HeaderComponent />
+  <main>
+    <RouterView />
+  </main>
 </template>
 
-<style module lang="scss"></style>
+<style module lang="scss">
+main {
+  padding-top: 48px;
+}
+</style>
