@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
-import type { Stamp } from "@/types/stamp";
+import type { Stamp } from "@/types/types";
 
 interface Props {
   stamps: Stamp[];
@@ -19,7 +19,7 @@ function handleSelectStamp(stamp: string) {
 </script>
 
 <template>
-  <Carousel :items-to-show="5" :class="$style.stampCarousel" class="stampCarousel">
+  <Carousel :items-to-show="5" wrap-around :class="$style.stampCarousel" class="stampCarousel">
     <Slide v-for="stamp in props.stamps" :key="stamp.id">
       <button
         :class="$style.stampButton"

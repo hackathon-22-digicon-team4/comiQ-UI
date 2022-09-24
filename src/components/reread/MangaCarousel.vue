@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation, Pagination } from "vue3-carousel";
+import type { BookUserStamp } from "@/types/types";
 
 interface Props {
-  images: string[];
+  bookUserStamps: BookUserStamp[];
 }
 
 const props = defineProps<Props>();
@@ -11,8 +12,10 @@ const props = defineProps<Props>();
 
 <template>
   <Carousel :items-to-show="4" wrap-around :autoplay="2000" class="mangaCarousel">
-    <Slide v-for="image in props.images" :key="image">
-      <img alt="" :src="image" height="400" />
+    <Slide v-for="bookUserStamp in props.bookUserStamps" :key="bookUserStamp.id">
+      <router-link :to="`book/${bookUserStamp.bookId}`">
+        <img alt="" :src="bookUserStamp.imageUrl" height="400" />
+      </router-link>
     </Slide>
     <template #addons>
       <Navigation />
