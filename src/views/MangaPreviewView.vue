@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import mangaComponent from "../components/MangaComponent.vue"
-import mangaStampComponent from '../components/MangaStampComponent.vue'
+import MangaComponent from "../components/MangaComponent.vue"
+import MangaStampComponent from '../components/MangaStampComponent.vue'
 
 let page = ref(0);
 interface Props{
@@ -11,28 +11,26 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  manga preview view
-  {{ mangaId }}
-  <mangaComesHere>
-    <mangaComponent mangaId="1"/>
-  </mangaComesHere>
-  <stampComesHere>
-    <mangaStampComponent/>
-  </stampComesHere>
+  <div :class="$style.mangaComesHere">
+    <MangaComponent :mangaId="mangaId"/>
+  </div>
+  <div :class="$style.stampComesHere">
+    <MangaStampComponent/>
+  </div>
 </template>
 
 <style module lang="scss">
 Contents {
   margin: auto;
 }
-mangaComesHere {
+.mangaComesHere {
   border: 1px solid black;
   width: 80%;
   text-align: center;
   display: block;
   margin: auto;
 }
-stampComesHere {
+.stampComesHere {
   border: 1px solid black;
   width: 80%;
   text-align: center;
