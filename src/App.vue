@@ -12,6 +12,7 @@ import HeaderComponent from "./components/HeaderComponent.vue";
 
 <style module lang="scss">
 main {
+  height: calc(100vh - 48px);
   padding-top: 48px;
 }
 </style>
