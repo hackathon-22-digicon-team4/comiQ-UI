@@ -1,3 +1,14 @@
+export interface Book {
+  id: string;
+  title: string;
+  imageUrl: string;
+  bookPages: {
+    bookId: string;
+    pageNum: number;
+    imageUrl: string;
+  }[];
+}
+
 export interface Stamp {
   id: string;
   name: string;
