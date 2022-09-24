@@ -9,14 +9,13 @@ import image5 from "@/assets/p00005.jpg";
 import image6 from "@/assets/p00006.jpg";
 import image7 from "@/assets/p00007.jpg";
 
-const stamps1 = ref<Stamp[]>([
+const stamps = ref<Stamp[]>([
   { name: "これすき", id: "1", imageUrl: "a" },
   { name: "w", id: "2", imageUrl: "b" },
   { name: "感動した", id: "3", imageUrl: "c" },
   { name: "そうはならんやろ", id: "4", imageUrl: "d" },
   { name: "おいすー", id: "5", imageUrl: "e" },
 ]);
-const stamps2 = ref<Stamp[]>([]);
 const selectedStamp = ref<string>("1");
 const images = ref<string[]>([image3, image4, image5, image6, image7]);
 const mockImages = computed(() =>
@@ -26,7 +25,6 @@ const mockImages = computed(() =>
 function handleSelectStamp(stamp: string) {
   selectedStamp.value = stamp;
   //画像のfetch
-  images;
 }
 
 onMounted(() => {
@@ -41,7 +39,7 @@ onMounted(() => {
   <p>過去にスタンプを押したシーンを見返すことができます。</p>
   <StampTab
     :class="$style.stampTab"
-    :stamps="stamps1.concat(stamps2)"
+    :stamps="stamps"
     :selected-stamp="selectedStamp"
     @select-stamp="handleSelectStamp($event)"
   />
