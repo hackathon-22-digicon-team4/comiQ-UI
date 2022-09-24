@@ -6,9 +6,8 @@ import s_oisu from "@/assets/s_oisu.png";
 import s_souhanaranyaro from "@/assets/s_souhanaranyaro.png";
 import s_tasukaru from "@/assets/s_tasukaru.png";
 import s_w from "@/assets/s_w.png";
-import { ref } from "vue";
 
-export const stamps = ref<Stamp[]>([
+export const stamps: Stamp[] = [
   { name: "これすき", id: "1", imageUrl: s_koresuki },
   { name: "w", id: "2", imageUrl: s_w },
   { name: "感動した", id: "3", imageUrl: s_kandoushita },
@@ -16,4 +15,4 @@ export const stamps = ref<Stamp[]>([
   { name: "おいすー", id: "5", imageUrl: s_oisu },
   { name: "フッフッフ", id: "6", imageUrl: s_fuffuffu },
   { name: "たすかる", id: "7", imageUrl: s_tasukaru },
-]);
+];
