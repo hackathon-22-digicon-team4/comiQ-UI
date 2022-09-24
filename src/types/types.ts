@@ -9,6 +9,15 @@ export interface Book {
   }[];
 }
 
+export interface BookSeries {
+  id: string;
+  name: string;
+  authorId: string;
+  authorName: string;
+  description: string;
+  imageUrl: string;
+}
+
 export interface Stamp {
   id: string;
   name: string;
