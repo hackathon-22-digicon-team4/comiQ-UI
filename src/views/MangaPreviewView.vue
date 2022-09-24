@@ -1,21 +1,19 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import MangaComponent from "../components/MangaComponent.vue"
-import MangaStampComponent from '../components/MangaStampComponent.vue'
+import MangaComponent from "../components/MangaComponent.vue";
+import MangaStampComponent from "../components/MangaStampComponent.vue";
 
-let page = ref(0);
-interface Props{
-  mangaId: string
+interface Props {
+  mangaId: string;
 }
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 </script>
 
 <template>
   <div :class="$style.mangaComesHere">
-    <MangaComponent :mangaId="mangaId"/>
+    <MangaComponent :mangaId="mangaId" />
   </div>
   <div :class="$style.stampComesHere">
-    <MangaStampComponent/>
+    <MangaStampComponent />
   </div>
 </template>
 

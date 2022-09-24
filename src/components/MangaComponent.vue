@@ -1,22 +1,20 @@
 <script setup lang="ts">
-import { computed } from '@vue/reactivity';
-import { onMounted, ref } from 'vue';
+import { ref } from "vue";
 
-interface Props{
-  mangaId: string
+interface Props {
+  mangaId: string;
 }
-const props = defineProps<Props>()
-const page = ref(1); // 2*page, 2*page+1ページが写し出されている 
+const props = defineProps<Props>();
+const page = ref(1); // 2*page, 2*page+1ページが写し出されている
 const path0 = ref("../../contents/");
-
 </script>
 
 <template>
   <button @click="page++">
-    <img :src="`${path0}${mangaId}/${2*page}.jpg`" class="img-contents"/>
+    <img :src="`${path0}${mangaId}/${2 * page}.jpg`" class="img-contents" />
   </button>
   <button @click="page--">
-    <img :src="`${path0}${mangaId}/${2*page-1}.jpg`" class="img-contents"/>
+    <img :src="`${path0}${mangaId}/${2 * page - 1}.jpg`" class="img-contents" />
   </button>
 </template>
 
