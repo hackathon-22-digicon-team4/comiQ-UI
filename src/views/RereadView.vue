@@ -8,15 +8,22 @@ import image4 from "@/assets/p00004.jpg";
 import image5 from "@/assets/p00005.jpg";
 import image6 from "@/assets/p00006.jpg";
 import image7 from "@/assets/p00007.jpg";
+import s_fuffuffu from "@/assets/s_fuffuffu.png";
+import s_kandoushita from "@/assets/s_kandoushita.png";
+import s_koresuki from "@/assets/s_koresuki.png";
+import s_oisu from "@/assets/s_oisu.png";
+import s_souhanaranyaro from "@/assets/s_souhanaranyaro.png";
+import s_tasukaru from "@/assets/s_tasukaru.png";
+import s_w from "@/assets/s_w.png";
 
 const stamps = ref<Stamp[]>([
-  { name: "これすき", id: "1", imageUrl: "a" },
-  { name: "w", id: "2", imageUrl: "b" },
-  { name: "感動した", id: "3", imageUrl: "c" },
-  { name: "そうはならんやろ", id: "4", imageUrl: "d" },
-  { name: "おいすー", id: "5", imageUrl: "e" },
-  { name: "fuffuffu", id: "6", imageUrl: "f" },
-  { name: "たすかる", id: "7", imageUrl: "g" },
+  { name: "これすき", id: "1", imageUrl: s_koresuki },
+  { name: "w", id: "2", imageUrl: s_w },
+  { name: "感動した", id: "3", imageUrl: s_kandoushita },
+  { name: "そうはならんやろ", id: "4", imageUrl: s_souhanaranyaro },
+  { name: "おいすー", id: "5", imageUrl: s_oisu },
+  { name: "フッフッフ", id: "6", imageUrl: s_fuffuffu },
+  { name: "たすかる", id: "7", imageUrl: s_tasukaru },
 ]);
 const selectedStamp = ref<string>("1");
 const images = ref<string[]>([image3, image4, image5, image6, image7]);

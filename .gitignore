@@ -28,3 +28,4 @@ coverage
 *.sw?
 
 src/assets/p*.jpg
+src/assets/s_*.png

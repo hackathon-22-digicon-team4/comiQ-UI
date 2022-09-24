@@ -26,7 +26,7 @@ function handleSelectStamp(stamp: string) {
         :data-selected="selectedStamp === stamp.id"
         @click="handleSelectStamp(stamp.id)"
       >
-        {{ stamp.name }}
+        <img :src="stamp.imageUrl" :alt="stamp.name" height="32" />
       </button>
     </Slide>
     <template #addons>
