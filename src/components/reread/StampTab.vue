@@ -1,8 +1,20 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/vue/24/solid";
+import type { Stamp } from "@/types/stamp";
 
-const stamps = ref(["これすき", "w", "感動", "そうはならんやろ", "おいすー"]);
+interface Props {
+  stamps: Stamp[];
+  selectedStamp: string;
+}
+
+const props = defineProps<Props>();
+const emit = defineEmits<{
+  (event: "selectStamp", stampId: string): void;
+}>();
+
+function handleSelectStamp(stamp: string) {
+  emit("selectStamp", stamp);
+}
 </script>
 
 <template>
@@ -10,8 +22,14 @@ const stamps = ref(["これすき", "w", "感動", "そうはならんやろ", "
     <button :class="$style.navButton">
       <ChevronLeftIcon :class="$style.icon" />
     </button>
-    <button :class="$style.tabButton" v-for="stamp in stamps" :key="stamp">
-      {{ stamp }}
+    <button
+      :class="$style.tabButton"
+      v-for="stamp in props.stamps"
+      :data-selected="selectedStamp === stamp.id"
+      :key="stamp.id"
+      @click="handleSelectStamp(stamp.id)"
+    >
+      {{ stamp.name }}
     </button>
     <button :class="$style.navButton">
       <ChevronRightIcon :class="$style.icon" />
@@ -38,6 +56,9 @@ const stamps = ref(["これすき", "w", "感動", "そうはならんやろ", "
   background-color: rgb(240, 240, 240);
   &:hover {
     background-color: rgb(212, 212, 212);
+  }
+  &[data-selected="true"] {
+    background-color: rgb(203, 203, 252);
   }
 }
 
