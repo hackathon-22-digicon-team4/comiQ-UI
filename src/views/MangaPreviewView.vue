@@ -4,11 +4,10 @@ import mangaComponent from "../components/MangaComponent.vue"
 import mangaStampComponent from '../components/MangaStampComponent.vue'
 
 let page = ref(0);
-const props = defineProps({
-  mangaId: {
-    type: String, required: true
-  }
-})
+interface Props{
+  mangaId: string
+}
+const props = defineProps<Props>()
 </script>
 
 <template>
