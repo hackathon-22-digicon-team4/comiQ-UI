@@ -10,9 +10,9 @@ const props = defineProps<Props>();
 </script>
 
 <template>
-  <Carousel :items-to-show="4" :class="$style.imageCarousel" wrapAround :autoplay="2000">
+  <Carousel :items-to-show="4" wrap-around :autoplay="2000" class="mangaCarousel">
     <Slide v-for="image in props.images" :key="image">
-      <img alt="" :src="image" height="400" :class="$style.carousel__item" />
+      <img alt="" :src="image" height="400" />
     </Slide>
     <template #addons>
       <Navigation />
@@ -28,8 +28,10 @@ const props = defineProps<Props>();
 </style>
 
 <style lang="scss">
-.carousel__pagination-button {
-  width: 16px;
-  height: 12px;
+.mangaCarousel {
+  .carousel__pagination-button {
+    width: 16px;
+    height: 12px;
+  }
 }
 </style>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import StampTab from "@/components/reread/StampTab.vue";
+import StampCarousel from "@/components/reread/StampCarousel.vue";
 import { ref, onMounted, computed } from "vue";
 import MangaCarousel from "@/components/reread/MangaCarousel.vue";
 import type { Stamp } from "@/types/stamp";
@@ -15,6 +15,8 @@ const stamps = ref<Stamp[]>([
   { name: "感動した", id: "3", imageUrl: "c" },
   { name: "そうはならんやろ", id: "4", imageUrl: "d" },
   { name: "おいすー", id: "5", imageUrl: "e" },
+  { name: "fuffuffu", id: "6", imageUrl: "f" },
+  { name: "たすかる", id: "7", imageUrl: "g" },
 ]);
 const selectedStamp = ref<string>("1");
 const images = ref<string[]>([image3, image4, image5, image6, image7]);
@@ -37,7 +39,7 @@ onMounted(() => {
 <template>
   <h2 :class="$style.pageTitle">あの場面をもう一度</h2>
   <p>過去にスタンプを押したシーンを見返すことができます。</p>
-  <StampTab
+  <StampCarousel
     :class="$style.stampTab"
     :stamps="stamps"
     :selected-stamp="selectedStamp"

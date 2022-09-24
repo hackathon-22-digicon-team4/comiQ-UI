@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/vue/24/solid";
+import "vue3-carousel/dist/carousel.css";
+import { Carousel, Slide, Navigation } from "vue3-carousel";
 import type { Stamp } from "@/types/stamp";
 
 interface Props {
@@ -18,35 +19,29 @@ function handleSelectStamp(stamp: string) {
 </script>
 
 <template>
-  <div :class="$style.tab">
-    <button :class="$style.navButton">
-      <ChevronLeftIcon :class="$style.icon" />
-    </button>
-    <button
-      :class="$style.tabButton"
-      v-for="stamp in props.stamps"
-      :data-selected="selectedStamp === stamp.id"
-      :key="stamp.id"
-      @click="handleSelectStamp(stamp.id)"
-    >
-      {{ stamp.name }}
-    </button>
-    <button :class="$style.navButton">
-      <ChevronRightIcon :class="$style.icon" />
-    </button>
-  </div>
+  <Carousel :items-to-show="5" :class="$style.stampCarousel" class="stampCarousel">
+    <Slide v-for="stamp in props.stamps" :key="stamp.id">
+      <button
+        :class="$style.stampButton"
+        :data-selected="selectedStamp === stamp.id"
+        @click="handleSelectStamp(stamp.id)"
+      >
+        {{ stamp.name }}
+      </button>
+    </Slide>
+    <template #addons>
+      <Navigation />
+    </template>
+  </Carousel>
 </template>
 
 <style module lang="scss">
-.tab {
-  height: 100px;
+.stampCarousel {
+  padding: 12px 0;
   border: solid 2px black;
   border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
 }
-.tabButton {
+.stampButton {
   display: block;
   font-size: 16px;
   padding: 16px 56px;
@@ -62,12 +57,18 @@ function handleSelectStamp(stamp: string) {
   }
 }
 
-.navButton {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-}
 .icon {
   width: 24px;
+}
+</style>
+
+<style lang="scss">
+.stampCarousel {
+  .carousel__prev {
+    left: 24px;
+  }
+  .carousel__next {
+    right: 24px;
+  }
 }
 </style>
