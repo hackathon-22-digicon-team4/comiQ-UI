@@ -1,11 +1,25 @@
 <script setup lang="ts">
+import { onMounted } from "vue";
+import axios from "axios";
 import { RouterView } from "vue-router";
 import HeaderComponent from "./components/HeaderComponent.vue";
+import { useUserStore } from "@/stores/users";
+
+const userStore = useUserStore();
+
+onMounted(async () => {
+  try {
+    const me = await axios.get("v1/users/me");
+    userStore.me = me.data.id;
+  } catch (err) {
+    alert(err);
+  }
+});
 </script>
 
 <template>
   <HeaderComponent />
-  <main>
+  <main v-if="userStore.me">
     <RouterView />
   </main>
 </template>
