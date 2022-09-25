@@ -42,7 +42,7 @@ const router = createRouter({
       props: true,
     },
     {
-      path: "/p/:mangaId(\\d+)", // mangaIdは数字のみ
+      path: "/manga/:mangaId", // mangaIdは数字のみ
       name: "mangaPreview",
       component: MangaPreviewView,
       props: true,

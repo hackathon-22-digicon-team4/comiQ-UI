@@ -18,21 +18,16 @@ const props = defineProps<Props>();
 </template>
 
 <style module lang="scss">
-Contents {
-  margin: auto;
-}
 .mangaComesHere {
   border: 1px solid black;
   width: 80%;
   text-align: center;
-  display: block;
   margin: auto;
 }
 .stampComesHere {
   border: 1px solid black;
   width: 80%;
   text-align: center;
-  display: block;
   margin: auto;
 }
 </style>

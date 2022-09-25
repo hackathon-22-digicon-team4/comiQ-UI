@@ -1,13 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
-let path0 = ref("../../contents/");
+import { stamps } from "../mocks/stamps";
 </script>
 <template>
-  <img :src="path0 + 'stamps/1.png'" class="img-stamp" />
-  <img :src="path0 + 'stamps/2.png'" class="img-stamp" />
-  <img :src="path0 + 'stamps/3.png'" class="img-stamp" />
-  <img :src="path0 + 'stamps/4.png'" class="img-stamp" />
-  <img :src="path0 + 'stamps/5.png'" class="img-stamp" />
+  <img :src="stamp.imageUrl" v-for="stamp in stamps" class="img-stamp" />
 </template>
 <style>
 img.img-stamp {
