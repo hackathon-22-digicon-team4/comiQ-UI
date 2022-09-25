@@ -6,8 +6,8 @@ import type { Book } from "@/types/types";
 const books = ref<Book[]>();
 
 onMounted(async () => {
-  const res = await axios.get("books");
-  books.value = res.data;
+  const res = await axios.get("/v1/books");
+  books.value = res.data.books;
 });
 </script>
 
