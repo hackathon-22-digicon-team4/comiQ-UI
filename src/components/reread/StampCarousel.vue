@@ -19,7 +19,14 @@ function handleSelectStamp(stamp: string) {
 </script>
 
 <template>
-  <Carousel :items-to-show="5" wrap-around :class="$style.stampCarousel" class="stampCarousel">
+  <div v-if="props.stamps.length === 0">まだスタンプがありません。</div>
+  <Carousel
+    v-else
+    :items-to-show="5"
+    wrap-around
+    :class="$style.stampCarousel"
+    class="stampCarousel"
+  >
     <Slide v-for="stamp in props.stamps" :key="stamp.id">
       <button
         :class="$style.stampButton"

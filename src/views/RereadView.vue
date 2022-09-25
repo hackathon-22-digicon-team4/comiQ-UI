@@ -2,21 +2,33 @@
 import StampCarousel from "@/components/reread/StampCarousel.vue";
 import { ref, onMounted } from "vue";
 import MangaCarousel from "@/components/reread/MangaCarousel.vue";
-import { stamps } from "@/mocks/stamps";
-import { bookUserStamps } from "@/mocks/bookUserStamps";
+import axios from "axios";
+import { useUserStore } from "@/stores/users";
+import type { BookUserStamp, Stamp } from "@/types/types";
+
+const userStore = useUserStore();
 
 const selectedStamp = ref<string>("");
+const bookUserStamps = ref<BookUserStamp[]>([]);
+const stamps = ref<Stamp[]>([]);
 
-function handleSelectStamp(stamp: string) {
+async function handleSelectStamp(stamp: string) {
   selectedStamp.value = stamp;
-  //bookuserstampsをfetch
+  const res = await axios.get(`/v1/book_user_stamps?stampId=${stamp}&userId=${userStore.me}`);
+  bookUserStamps.value = res.data.bookUserStamps;
 }
 
-onMounted(() => {
-  //fetch stamps
-  //stampsの一番最初の要素のbookuserstampsをfetch
-  //selectedStampをstampsの一番最初の要素にする
-  console.log("mounted");
+onMounted(async () => {
+  const stampResponse = await axios.get("/v1/stamps");
+  stamps.value = stampResponse.data.stamps;
+  if (stamps.value.length === 0) {
+    return;
+  }
+  const bookUserStampResponse = await axios.get(
+    `/v1/book_user_stamps?stampId=${stampResponse.data.stamps[0].id}&userId=${userStore.me}`,
+  );
+  bookUserStamps.value = bookUserStampResponse.data.bookUserStamps;
+  selectedStamp.value = stampResponse.data.stamps[0].id;
 });
 </script>
 
