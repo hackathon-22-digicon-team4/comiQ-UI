@@ -9,7 +9,7 @@ const userStore = useUserStore();
 
 onMounted(async () => {
   try {
-    const me = await axios.get("v1/users/me");
+    const me = await axios.get("/v1/users/me");
     userStore.me = me.data.id;
   } catch (err) {
     alert(err);
@@ -19,7 +19,7 @@ onMounted(async () => {
 
 <template>
   <HeaderComponent />
-  <main v-if="userStore.me">
+  <main>
     <RouterView />
   </main>
 </template>

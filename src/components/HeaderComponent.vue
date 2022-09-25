@@ -2,7 +2,9 @@
 
 <template>
   <header>
-    <h1>Header</h1>
+    <h1>
+      <router-link to="/">comiQ</router-link>
+    </h1>
   </header>
 </template>
 
@@ -15,6 +17,12 @@ header {
   z-index: 99;
   display: flex;
   align-items: center;
-  padding: 0px 4px;
+  padding: 0px 12px;
+  h1 {
+    a {
+      color: black;
+      text-decoration: none;
+    }
+  }
 }
 </style>
