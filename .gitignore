@@ -26,3 +26,6 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+
+src/assets/p*.jpg
+src/assets/s_*.png
