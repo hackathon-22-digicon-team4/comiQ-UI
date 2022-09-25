@@ -12,5 +12,5 @@ export interface BookUserStamp {
   y: number;
   userId: string;
   stampId: string;
-  imageUrl: string;
+  bookPageImageUrl: string;
 }
