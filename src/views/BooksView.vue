@@ -2,11 +2,16 @@
 import { onMounted, ref } from "vue";
 import axios from "axios";
 import type { Book } from "@/types/types";
+import { useRoute } from "vue-router";
+import { parseParamToId } from "@/utils/parseParamToId";
+
+const route = useRoute();
 
 const books = ref<Book[]>();
+const id = parseParamToId(route.params.id);
 
 onMounted(async () => {
-  const res = await axios.get("/v1/books");
+  const res = await axios.get(`/v1/book_series/${id}/books`);
   books.value = res.data.books;
 });
 </script>
