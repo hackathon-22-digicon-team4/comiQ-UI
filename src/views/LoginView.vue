@@ -1,24 +1,46 @@
 <script setup lang="ts">
+import axios from "axios";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
-const username = ref("");
+const router = useRouter();
+
+const id = ref("");
 const password = ref("");
 
-function login() {
-  console.log("login", username.value, password.value);
+async function login() {
+  try {
+    await axios.post("/v1/users/login", {
+      id: id.value,
+      password: password.value,
+    });
+    alert("logged in");
+    router.push("/");
+  } catch {
+    alert("failed to login");
+  }
 }
-function signin() {
-  console.log("signin", username.value, password.value);
+async function signup() {
+  try {
+    await axios.post("/v1/users/signup", {
+      id: id.value,
+      password: password.value,
+    });
+    alert("signed up");
+    router.push("/");
+  } catch {
+    alert("failed to signup");
+  }
 }
 </script>
 
 <template>
-  <h2>ログイン/サインイン</h2>
+  <h2>ログイン/サインアップ</h2>
   <form :class="$style.form">
     <div :class="$style.inputForm">
-      <label for="username">
+      <label for="id">
         ユーザー名
-        <input type="text" v-model="username" />
+        <input type="text" v-model="id" />
       </label>
       <label for="password">
         パスワード
@@ -27,7 +49,7 @@ function signin() {
     </div>
     <div :class="$style.buttons">
       <button @click="login" type="button">ログイン</button>
-      <button @click="signin" type="button">サインイン</button>
+      <button @click="signup" type="button">サインアップ</button>
     </div>
   </form>
 </template>
