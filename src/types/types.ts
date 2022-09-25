@@ -1,17 +1,14 @@
 export interface Book {
   id: string;
   title: string;
+  bookSeriesId: string;
+  totalPages: number;
   imageUrl: string;
-  bookPages: {
-    bookId: string;
-    pageNum: number;
-    imageUrl: string;
-  }[];
 }
 
 export interface BookSeries {
   id: string;
-  name: string;
+  title: string;
   authorId: string;
   authorName: string;
   description: string;

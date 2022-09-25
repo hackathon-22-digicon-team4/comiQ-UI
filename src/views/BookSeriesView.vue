@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { bookSeriesList } from "../mocks/bookSeriesList";
+import axios from "axios";
 import type { BookSeries } from "@/types/types";
 
-//const bookSeries = ref<BookSeries[]>();
+const bookSeriesList = ref<BookSeries[]>();
 
-onMounted(() => {
-  console.log("bookSeries");
+onMounted(async () => {
+  const res = await axios.get("book_series");
+  bookSeriesList.value = res.data;
 });
 </script>
 
@@ -15,9 +16,9 @@ onMounted(() => {
   <div :class="$style.bookSeriesList">
     <div v-for="bookSeries in bookSeriesList" :key="bookSeries.id" :class="$style.bookSeries">
       <router-link :to="`bookSeries/${bookSeries.id}`">
-        <img :src="bookSeries.imageUrl" :alt="bookSeries.name" />
+        <img :src="bookSeries.imageUrl" :alt="bookSeries.title" />
       </router-link>
-      <p>{{ bookSeries.name }}</p>
+      <p>{{ bookSeries.title }}</p>
     </div>
   </div>
 </template>

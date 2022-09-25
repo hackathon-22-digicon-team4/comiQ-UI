@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { books } from "../mocks/books";
+import axios from "axios";
 import type { Book } from "@/types/types";
 
-//const books = ref<Book[]>();
+const books = ref<Book[]>();
 
-onMounted(() => {
-  console.log("books");
+onMounted(async () => {
+  const res = await axios.get("books");
+  books.value = res.data;
 });
 </script>
 
