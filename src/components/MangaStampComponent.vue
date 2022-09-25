@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { stamps } from "../mocks/stamps";
 </script>
 <template>
-  <img :src="stamp.imageUrl" v-for="stamp in stamps" class="img-stamp" />
+  <img :src="stamp.imageUrl" v-for="stamp in stamps" :key="stamp.id" class="img-stamp" />
 </template>
 <style>
 img.img-stamp {
