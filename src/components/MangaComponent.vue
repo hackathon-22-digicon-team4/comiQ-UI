@@ -16,7 +16,7 @@ const mouseOnRight = ref(false);
 <template>
   <button @click="page < lastPage / 2 && page++">
     <img
-      :src="`${path0}/${mangaId}/${2 * page}.jpg`"
+      :src="`${path0}/${props.mangaId}/${2 * page}.jpg`"
       :class="$style.imgLeft"
       @mouseover="mouseOnLeft = true"
       @mouseleave="mouseOnLeft = false"
@@ -28,9 +28,9 @@ const mouseOnRight = ref(false);
       @mouseleave="mouseOnLeft = false"
     />
   </button>
-  <button @click="if (page > 1) page--;">
+  <button @click="page > 1 && page--">
     <img
-      :src="`${path0}/${mangaId}/${2 * page - 1}.jpg`"
+      :src="`${path0}/${props.mangaId}/${2 * page - 1}.jpg`"
       :class="$style.imgRight"
       @mouseover="mouseOnRight = true"
       @mouseleave="mouseOnRight = false"

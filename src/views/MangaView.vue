@@ -10,7 +10,7 @@ const props = defineProps<Props>();
 
 <template>
   <div :class="$style.mangaComesHere">
-    <MangaComponent :mangaId="mangaId" />
+    <MangaComponent :mangaId="props.mangaId" />
   </div>
   <div :class="$style.stampComesHere">
     <MangaStampComponent />
