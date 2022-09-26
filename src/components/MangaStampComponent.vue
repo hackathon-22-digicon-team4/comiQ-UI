@@ -38,6 +38,7 @@ function foo() {
 
 <style module lang="scss">
 .stampButton {
+  cursor: pointer;
   &[is-selected="true"] {
     border: 1px solid;
     background-color: rgb(184, 255, 255);
@@ -45,15 +46,14 @@ function foo() {
 }
 .stampImg {
   width: 20%;
-  height: auto;
 }
 .modalButton {
   width: 5%;
-  height: 100%;
+  cursor: pointer;
   background-color: rgb(219, 219, 219);
 }
 .container {
-  height: auto;
   display: flex;
+  justify-content: space-between;
 }
 </style>

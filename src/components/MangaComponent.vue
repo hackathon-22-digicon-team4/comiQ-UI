@@ -1,30 +1,80 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { computed, ref } from "vue";
+import { XMarkIcon } from "@heroicons/vue/20/solid";
 import { ArrowLeftCircleIcon, ArrowRightCircleIcon } from "@heroicons/vue/24/solid";
-import type { Book } from "@/types/types";
+import type { BookUserStamp, Book, BookUserStampRequest } from "@/types/types";
+
+type Direction = "left" | "right";
 
 interface Props {
-  mangaId: string;
-  bookDetail: Book;
+  manga: Book;
+  selectedStamp: string;
+  bookUserStamps: BookUserStamp[];
 }
+
 const props = defineProps<Props>();
+const emit = defineEmits<{
+  (event: "addStamp", BookUserStamp: BookUserStampRequest): void;
+  (event: "deleteStamp", id: string): void;
+}>();
+
 const page = ref(1); // 2*page, 2*page+1ページが写し出されている
 const lastPage = ref(10);
 const path0 = "../../contents";
 const mouseOnLeft = ref(false);
 const mouseOnRight = ref(false);
-watch(
-  () => props.bookDetail,
-  (bookDetail) => {
-    lastPage.value = bookDetail.totalPages;
-  },
-);
+
+const leftStamps = computed(() => {
+  return props.bookUserStamps.filter(
+    (bookUserStamp) => bookUserStamp.pageNum === 2 * page.value + 1,
+  );
+});
+const rightStamps = computed(() => {
+  return props.bookUserStamps.filter((bookUserStamp) => bookUserStamp.pageNum === 2 * page.value);
+});
+
+function movePage(direction: Direction) {
+  if (direction === "right") {
+    page.value--;
+  } else {
+    page.value++;
+  }
+}
+
+function handlePutStamp(e: MouseEvent, direction: Direction) {
+  const { x, y } = e;
+  const bookUserStamp: BookUserStampRequest = {
+    bookId: props.manga.id,
+    bookSeriesId: props.manga.bookSeriesId,
+    pageNum: direction === "right" ? 2 * page.value : 2 * page.value + 1,
+    x: x,
+    y: y,
+    stampId: props.selectedStamp,
+  };
+  emit("addStamp", bookUserStamp);
+}
+
+function handleClick(e: MouseEvent, direction: Direction) {
+  if (props.selectedStamp === "") {
+    movePage(direction);
+  } else {
+    handlePutStamp(e, direction);
+  }
+}
+
+async function handleDeleteStamp(id: string) {
+  emit("deleteStamp", id);
+}
 </script>
 
 <template>
-  <div @click="page++" v-if="0 < page && page < lastPage / 2" :class="$style.manga">
+  <div
+    @click="handleClick($event, 'left')"
+    v-if="0 < page && page < lastPage / 2"
+    :class="$style.manga"
+  >
     <img
-      :src="`${path0}/${props.mangaId}/${2 * page}.jpg`"
+      :src="`${path0}/${props.manga.id}/${2 * page}.jpg`"
       :class="$style.imgLeft"
       @mouseover="mouseOnLeft = true"
       @mouseleave="mouseOnLeft = false"
@@ -35,6 +85,17 @@ watch(
       @mouseover="mouseOnLeft = true"
       @mouseleave="mouseOnLeft = false"
     />
+    <div
+      v-for="stamp in leftStamps"
+      :key="stamp.id"
+      :class="$style.stamp"
+      :style="{ top: stamp.y + 'px', left: stamp.x + 'px' }"
+    >
+      <img :src="stamp.bookPageImageUrl" alt="" width="32" />
+      <button @click="handleDeleteStamp(stamp.id)" :class="$style.deleteButton">
+        <XMarkIcon :class="$style.icon" />
+      </button>
+    </div>
   </div>
   <div
     :class="[$style.manga, $style.firstPage]"
@@ -52,9 +113,13 @@ watch(
     />
   </div>
   <div @click="page++" v-else :class="[$style.manga, $style.lastPage]">つぎの巻に進む</div>
-  <div @click="page--" v-if="0 < page && page < lastPage / 2" :class="$style.manga">
+  <div
+    @click="handleClick($event, 'right')"
+    v-if="0 < page && page < lastPage / 2"
+    :class="$style.manga"
+  >
     <img
-      :src="`${path0}/${props.mangaId}/${2 * page - 1}.jpg`"
+      :src="`${path0}/${props.manga.id}/${2 * page - 1}.jpg`"
       :class="$style.imgRight"
       @mouseover="mouseOnRight = true"
       @mouseleave="mouseOnRight = false"
@@ -65,11 +130,22 @@ watch(
       @mouseover="mouseOnRight = true"
       @mouseleave="mouseOnRight = false"
     />
+    <div
+      v-for="stamp in rightStamps"
+      :key="stamp.id"
+      :class="$style.stamp"
+      :style="{ top: stamp.y + 'px', left: stamp.x + 'px' }"
+    >
+      <img :src="stamp.bookPageImageUrl" alt="" width="32" />
+      <button @click="handleDeleteStamp(stamp.id)" :class="$style.deleteButton">
+        <XMarkIcon :class="$style.icon" />
+      </button>
+    </div>
   </div>
   <div v-else-if="page === 0" :class="[$style.manga, $style.firstPage]">
-    <h2>{{ bookDetail.title }}</h2>
-    <p>著者：{{ bookDetail.authorName }}</p>
-    <p>総ページ数: {{ bookDetail.totalPages }}</p>
+    <h2>{{ manga.title }}</h2>
+    <p>著者：{{ manga.authorName }}</p>
+    <p>総ページ数: {{ manga.totalPages }}</p>
   </div>
   <div
     @click="page--"
@@ -96,6 +172,7 @@ watch(
   height: 100%;
 }
 .manga {
+  display: inline-block;
   width: 30%;
   height: 70vh;
   background-color: white;
@@ -127,5 +204,35 @@ watch(
   justify-content: center;
   flex-direction: column;
   border: solid 1px black;
+}
+
+.stamp {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background-color: white;
+  border: none;
+  padding: 0px;
+}
+
+.icon {
+  width: 20px;
+}
+
+.deleteButton {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 0px;
+  opacity: 0%;
+  &:hover {
+    opacity: 60%;
+  }
 }
 </style>

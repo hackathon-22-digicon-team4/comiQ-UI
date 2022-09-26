@@ -1,21 +1,22 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import axios from "axios";
-import { useUserStore } from "@/stores/users";
+import StampShowComponent from "../components/StampShowComponent.vue";
+import type { Stamp, Book, BookUserStamp, BookUserStampRequest } from "../types/types";
 import MangaComponent from "../components/MangaComponent.vue";
 import MangaStampComponent from "../components/MangaStampComponent.vue";
-import StampShowComponent from "../components/StampShowComponent.vue";
-import type { Stamp, Book } from "../types/types";
+import axios from "axios";
 
-const userStore = useUserStore();
 interface Props {
   mangaId: string;
 }
 const props = defineProps<Props>();
+
 const selectedStamp = ref<string>("");
 const isMyStampShow = ref<boolean>(true);
 const isOtherStampShow = ref<boolean>(true);
 const stamps = ref<Stamp[]>([]);
+const bookUserStamps = ref<BookUserStamp[]>([]);
+const manga = ref<Book>({} as Book);
 
 function handleSelectStamp(stamp: string) {
   selectedStamp.value = stamp;
@@ -26,15 +27,33 @@ function handleChangeMyStampShow() {
 function handleChangeOtherStampShow() {
   isOtherStampShow.value = !isOtherStampShow.value;
 }
-const bookDetail = ref<Book>({} as Book);
+
+async function addStamp(BookUserStamp: BookUserStampRequest) {
+  //const res = await axios.post("/v1/book_user_stamps", BookUserStamp);
+  //bookUserStamps.value.push(res.data);
+  bookUserStamps.value.push({
+    id: "aaa",
+    bookId: "a",
+    pageNum: 2,
+    x: BookUserStamp.x,
+    y: BookUserStamp.y,
+    userId: "aaa",
+    stampId: BookUserStamp.stampId,
+    bookPageImageUrl: "https://q.trap.jp/api/v3/public/icon/mehm8128",
+  });
+}
+
+async function deleteStamp(id: string) {
+  //await axios.delete(`/v1/book_user_stamps/${id}`);
+  bookUserStamps.value = bookUserStamps.value.filter((bookUserStamp) => bookUserStamp.id !== id);
+}
 
 onMounted(async () => {
   const stampResponse = await axios.get("/v1/stamps");
   stamps.value = stampResponse.data.stamps;
 
   const bookResponse = await axios.get(`/v1/books/${props.mangaId}`);
-  console.log(bookResponse);
-  bookDetail.value = bookResponse.data;
+  manga.value = bookResponse.data;
 });
 </script>
 
@@ -46,7 +65,13 @@ onMounted(async () => {
     @change-other-stamp-show="handleChangeOtherStampShow"
   />
   <div :class="$style.mangaComesHere">
-    <MangaComponent :manga-id="props.mangaId" :book-detail="bookDetail" />
+    <MangaComponent
+      :manga="manga"
+      :selected-stamp="selectedStamp"
+      :book-user-stamps="bookUserStamps"
+      @add-stamp="addStamp($event)"
+      @delete-stamp="deleteStamp($event)"
+    />
   </div>
   <div :class="$style.stampComesHere">
     <MangaStampComponent
