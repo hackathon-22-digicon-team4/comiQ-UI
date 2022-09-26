@@ -31,29 +31,37 @@ onMounted(async () => {
 </script>
 
 <template>
-  <button
-    v-for="stamp in stamps"
-    :key="stamp.id"
-    :class="$style.stampButton"
-    :isSelected="selectedStamp === stamp.id"
-    @click="handleSelected(stamp.id)"
-  >
-    <img :src="stamp.imageUrl" :class="$style.stampImg" />
-  </button>
-  <button :class="$style.modalButton" @click="foo">・</button>
+  <div :class="$style.container">
+    <button
+      v-for="stamp in stamps"
+      :key="stamp.id"
+      :class="$style.stampButton"
+      :isSelected="selectedStamp === stamp.id"
+      @click="handleSelected(stamp.id)"
+    >
+      <img :src="stamp.imageUrl" :class="$style.stampImg" />
+    </button>
+    <button :class="$style.modalButton" @click="foo">・</button>
+  </div>
 </template>
 
 <style module lang="scss">
 .stampButton {
-  width: 10%;
-  height: auto;
   &[isSelected="true"] {
     border: 1px solid;
   }
 }
+.stampImg {
+  width: 20%;
+  height: auto;
+}
 .modalButton {
   width: 10%;
-  height: 100px;
+  height: 100%;
   background-color: rgb(219, 219, 219);
+}
+.container {
+  height: auto;
+  display: flex;
 }
 </style>
