@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { stamps } from "../mocks/stamps";
+import { onMounted, ref } from "vue";
+import axios from "axios";
+import type { Stamp } from "../types/types";
 
 interface Props {
   selectedStamp: string;
@@ -15,6 +17,17 @@ function handleSelected(stamp: string) {
 function foo() {
   console.log("Not Implemented");
 }
+
+const stamps = ref<Stamp[]>([]);
+
+onMounted(async () => {
+  const stampResponse = await axios.get("/v1/stamps");
+  stamps.value = stampResponse.data.stamps;
+  if (stamps.value.length === 0) {
+    return;
+  }
+  emit("selectStamp", stampResponse.data.stamps[0].id);
+});
 </script>
 
 <template>
