@@ -1,14 +1,59 @@
 <script setup lang="ts">
-import { stamps } from "../mocks/stamps";
+import { EllipsisHorizontalCircleIcon } from "@heroicons/vue/24/outline";
+import type { Stamp } from "../types/types";
+
+interface Props {
+  selectedStamp: string;
+  stamps: Stamp[];
+}
+const props = defineProps<Props>();
+const emit = defineEmits<{
+  (event: "selectStamp", stampId: string): void;
+}>();
+
+function handleSelectStamp(stamp: string) {
+  emit("selectStamp", stamp);
+}
+function foo() {
+  console.log("Not Implemented");
+}
 </script>
 
 <template>
-  <img :src="stamp.imageUrl" v-for="stamp in stamps" :key="stamp.id" class="img-stamp" />
+  <div :class="$style.container">
+    <button
+      v-for="stamp in stamps"
+      :key="stamp.id"
+      :class="$style.stampButton"
+      :is-selected="selectedStamp === stamp.id"
+      @click="handleSelectStamp(stamp.id)"
+    >
+      <img :src="stamp.imageUrl" :class="$style.stampImg" :alt="stamp.name" />
+    </button>
+    <button :class="$style.modalButton" @click="foo">
+      <EllipsisHorizontalCircleIcon />
+    </button>
+  </div>
 </template>
 
-<style>
-img.img-stamp {
-  width: 5%;
+<style module lang="scss">
+.stampButton {
+  &[is-selected="true"] {
+    border: 1px solid;
+    background-color: rgb(184, 255, 255);
+  }
+}
+.stampImg {
+  width: 20%;
   height: auto;
+}
+.modalButton {
+  width: 5%;
+  height: 100%;
+  background-color: rgb(219, 219, 219);
+}
+.container {
+  height: auto;
+  display: flex;
 }
 </style>
