@@ -81,7 +81,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  {{ bookUserStamps.length }}
   <StampShowComponent
     :is-my-stamp-show="isMyStampShow"
     :is-other-stamp-show="isOtherStampShow"
