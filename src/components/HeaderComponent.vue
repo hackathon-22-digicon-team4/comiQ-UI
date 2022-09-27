@@ -9,7 +9,7 @@ const userStore = useUserStore();
 async function logout() {
   try {
     await axios.post("/v1/users/logout");
-    userStore.me = undefined;
+    userStore.me = "";
     router.push("/login/");
   } catch {
     alert("failed to logout");
@@ -22,12 +22,11 @@ async function logout() {
     <h1>
       <router-link to="/">comiQ</router-link>
     </h1>
-    <span v-if="userStore.me !== undefined">
-      {{ userStore.me }}でログイン中 <span @click="logout()">ログアウト</span>
-    </span>
-    <span v-else>
-      <router-link to="/login/"> ここを押してログイン </router-link>
-    </span>
+    <div v-if="userStore.me !== ''" :class="$style.isLogin">
+      <span>{{ userStore.me }}でログイン中</span>
+      <button @click="logout" :class="$style.button">ログアウト</button>
+    </div>
+    <router-link v-else :class="$style.button" to="/login/">ログイン</router-link>
   </header>
 </template>
 
@@ -47,6 +46,24 @@ header {
       color: black;
       text-decoration: none;
     }
+  }
+}
+
+.button {
+  border: solid 1px black;
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 2px 4px;
+  text-decoration: none;
+  color: black;
+}
+
+.isLogin {
+  display: flex;
+  align-items: center;
+  button {
+    margin-left: 8px;
   }
 }
 </style>

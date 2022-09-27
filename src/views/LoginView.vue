@@ -18,7 +18,7 @@ async function login() {
       password: password.value,
     });
     alert("logged in");
-    userStore.me = id;
+    userStore.me = id.value;
     router.push("/");
   } catch {
     alert("failed to login");
@@ -68,11 +68,10 @@ async function signup() {
 }
 .buttons {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   padding: 8px 0;
 
   button {
-    display: block;
     border: solid 1px black;
     background-color: #fff;
     cursor: pointer;
