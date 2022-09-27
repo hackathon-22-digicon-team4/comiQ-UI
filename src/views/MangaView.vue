@@ -26,7 +26,7 @@ function handleChangeMyStampShow() {
 function handleChangeOtherStampShow() {
   isOtherStampShow.value = !isOtherStampShow.value;
 }
-const bookDetail = ref<Book>();
+const bookDetail = ref<Book>({} as Book);
 
 onMounted(async () => {
   const stampResponse = await axios.get("/v1/stamps");
