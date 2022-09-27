@@ -3,9 +3,10 @@ import type { Stamp } from "@/types/types";
 
 interface Props {
   stamps: Stamp[];
+  selectedStamp: string;
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 const emit = defineEmits<{
   (e: "closeModal"): void;
   (e: "selectStamp", stampId: string): void;
@@ -26,6 +27,7 @@ function handleSelectStamp(stampId: string) {
           v-for="stamp in stamps.slice(9)"
           :key="stamp.id"
           :class="$style.stampButton"
+          :data-is-selected="selectedStamp === stamp.id"
           @click="handleSelectStamp(stamp.id)"
         >
           <img :src="stamp.imageUrl" :class="$style.stampImg" :alt="stamp.name" />
@@ -58,9 +60,17 @@ function handleSelectStamp(stampId: string) {
 
 .stampButton {
   cursor: pointer;
-  &[is-selected="true"] {
-    border: 1px solid;
+  &[data-is-selected="true"] {
+    border: solid 4px rgb(184, 255, 255);
     background-color: rgb(184, 255, 255);
   }
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 </style>

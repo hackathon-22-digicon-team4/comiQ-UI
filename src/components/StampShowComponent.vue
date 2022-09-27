@@ -4,7 +4,7 @@ interface Props {
   isMyStampShow: boolean;
   isOtherStampShow: boolean;
 }
-const props = defineProps<Props>();
+defineProps<Props>();
 const emit = defineEmits<{
   (event: "changeMyStampShow"): void;
   (event: "changeOtherStampShow"): void;
