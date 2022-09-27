@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { ArrowLeftCircleIcon, ArrowRightCircleIcon } from "@heroicons/vue/24/solid";
+import type { Book } from "@/types/types";
 
 interface Props {
   mangaId: string;
+  bookDetail: Book;
 }
 const props = defineProps<Props>();
 const page = ref(1); // 2*page, 2*page+1ページが写し出されている
@@ -11,10 +13,16 @@ const lastPage = ref(88);
 const path0 = "../../contents";
 const mouseOnLeft = ref(false);
 const mouseOnRight = ref(false);
+watch(
+  () => props.bookDetail,
+  (bookDetail) => {
+    lastPage.value = bookDetail.totalPages;
+  },
+);
 </script>
 
 <template>
-  <button @click="page < lastPage / 2 && page++" :class="$style.button">
+  <button @click="page++" v-if="0 < page && page < lastPage / 2" :class="$style.button">
     <img
       :src="`${path0}/${props.mangaId}/${2 * page}.jpg`"
       :class="$style.imgLeft"
@@ -28,13 +36,47 @@ const mouseOnRight = ref(false);
       @mouseleave="mouseOnLeft = false"
     />
   </button>
-  <button @click="page > 1 && page--" :class="$style.button">
+  <button
+    @click="page++"
+    v-else-if="page === 0"
+    @mouseover="mouseOnLeft = true"
+    @mouseleave="mouseOnLeft = false"
+    :class="$style.button"
+  >
+    クリックで読み始める
+    <ArrowLeftCircleIcon
+      :class="$style.leftCircle"
+      v-show="mouseOnLeft"
+      @mouseover="mouseOnLeft = true"
+      @mouseleave="mouseOnLeft = false"
+    />
+  </button>
+  <button @click="page++" v-else>つぎの巻に進む</button>
+  <button @click="page--" v-if="0 < page && page < lastPage / 2">
     <img
       :src="`${path0}/${props.mangaId}/${2 * page - 1}.jpg`"
       :class="$style.imgRight"
       @mouseover="mouseOnRight = true"
       @mouseleave="mouseOnRight = false"
     />
+    <ArrowRightCircleIcon
+      :class="$style.rightCircle"
+      v-show="mouseOnRight"
+      @mouseover="mouseOnRight = true"
+      @mouseleave="mouseOnRight = false"
+    />
+  </button>
+  <button v-else-if="page === 0" :class="$style.statistics">
+    タイトル: {{ bookDetail.title }} <br />
+    totalPages: {{ bookDetail.totalPages }}
+  </button>
+  <button
+    @click="page--"
+    v-else
+    @mouseover="mouseOnRight = true"
+    @mouseleave="mouseOnRight = false"
+  >
+    もどる
     <ArrowRightCircleIcon
       :class="$style.rightCircle"
       v-show="mouseOnRight"
@@ -76,5 +118,9 @@ const mouseOnRight = ref(false);
   right: 2%;
   opacity: 0.5;
   transform: translate(0, -50%);
+}
+
+.statistics {
+  white-space: pre;
 }
 </style>

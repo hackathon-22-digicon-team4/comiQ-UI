@@ -5,7 +5,7 @@ import { useUserStore } from "@/stores/users";
 import MangaComponent from "../components/MangaComponent.vue";
 import MangaStampComponent from "../components/MangaStampComponent.vue";
 import StampShowComponent from "../components/StampShowComponent.vue";
-import type { Stamp } from "../types/types";
+import type { Stamp, Book } from "../types/types";
 
 const userStore = useUserStore();
 interface Props {
@@ -26,9 +26,15 @@ function handleChangeMyStampShow() {
 function handleChangeOtherStampShow() {
   isOtherStampShow.value = !isOtherStampShow.value;
 }
+const bookDetail = ref<Book>();
+
 onMounted(async () => {
   const stampResponse = await axios.get("/v1/stamps");
   stamps.value = stampResponse.data.stamps;
+
+  const bookResponse = await axios.get(`/v1/books/${props.mangaId}`);
+  console.log(bookResponse);
+  bookDetail.value = bookResponse.data;
 });
 </script>
 
@@ -40,7 +46,7 @@ onMounted(async () => {
     @change-other-stamp-show="handleChangeOtherStampShow"
   />
   <div :class="$style.mangaComesHere">
-    <MangaComponent :manga-id="props.mangaId" />
+    <MangaComponent :manga-id="props.mangaId" :book-detail="bookDetail" />
   </div>
   <div :class="$style.stampComesHere">
     <MangaStampComponent
@@ -49,6 +55,7 @@ onMounted(async () => {
       @select-stamp="handleSelectStamp($event)"
     />
   </div>
+  {{ bookDetail }}
 </template>
 
 <style module lang="scss">
