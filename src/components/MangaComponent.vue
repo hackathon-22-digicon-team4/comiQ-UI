@@ -207,7 +207,7 @@ async function handleDeleteStamp(id: string) {
 }
 
 .stamp {
-  position: absolute;
+  position: fixed;
   width: 32px;
   height: 32px;
   background-color: white;
