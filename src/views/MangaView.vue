@@ -53,16 +53,6 @@ async function getBookUserStamps() {
 async function addStamp(BookUserStamp: BookUserStampRequest) {
   const res = await axios.post("/v1/book_user_stamps", BookUserStamp);
   bookUserStamps.value.push(res.data);
-  bookUserStamps.value.push({
-    id: "aaa",
-    bookId: "a",
-    pageNum: 2,
-    x: BookUserStamp.x,
-    y: BookUserStamp.y,
-    userId: "aaa",
-    stampId: BookUserStamp.stampId,
-    bookPageImageUrl: "https://q.trap.jp/api/v3/public/icon/mehm8128",
-  }); //あとで消す
   selectedStamp.value = "";
 }
 
@@ -74,9 +64,8 @@ async function deleteStamp(id: string) {
 onMounted(async () => {
   const stampResponse = await axios.get("/v1/stamps");
   stamps.value = stampResponse.data.stamps;
-
-  const bookResponse = await axios.get(`/v1/books/${props.mangaId}`);
-  manga.value = bookResponse.data;
+  const mangaResponse = await axios.get(`/v1/books/${props.mangaId}`);
+  manga.value = mangaResponse.data;
 });
 </script>
 

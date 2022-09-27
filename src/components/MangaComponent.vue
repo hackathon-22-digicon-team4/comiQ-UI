@@ -20,7 +20,6 @@ const emit = defineEmits<{
 
 const page = ref(1); // 2*page, 2*page+1ページが写し出されている
 const lastPage = ref(props.manga.totalPages);
-const path0 = "../../contents";
 const mouseOnLeft = ref(false);
 const mouseOnRight = ref(false);
 
@@ -74,7 +73,7 @@ async function handleDeleteStamp(id: string) {
     :class="$style.manga"
   >
     <img
-      :src="`${path0}/${props.manga.id}/${2 * page}.jpg`"
+      :src="`${manga.imageUrl}/${2 * page}.jpg`"
       :class="$style.imgLeft"
       @mouseover="mouseOnLeft = true"
       @mouseleave="mouseOnLeft = false"
@@ -119,7 +118,7 @@ async function handleDeleteStamp(id: string) {
     :class="$style.manga"
   >
     <img
-      :src="`${path0}/${props.manga.id}/${2 * page - 1}.jpg`"
+      :src="`${manga.imageUrl}/${2 * page - 1}.jpg`"
       :class="$style.imgRight"
       @mouseover="mouseOnRight = true"
       @mouseleave="mouseOnRight = false"
