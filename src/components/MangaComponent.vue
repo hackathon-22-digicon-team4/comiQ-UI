@@ -67,9 +67,9 @@ watch(
     />
   </div>
   <div v-else-if="page === 0" :class="[$style.manga, $style.firstPage]">
-    <h2>タイトル: {{ bookDetail.title }}</h2>
+    <h2>{{ bookDetail.title }}</h2>
     <p>著者：APIに追加されたら追記</p>
-    <p>totalPages: {{ bookDetail.totalPages }}</p>
+    <p>総ページ数: {{ bookDetail.totalPages }}</p>
   </div>
   <div
     @click="page--"
