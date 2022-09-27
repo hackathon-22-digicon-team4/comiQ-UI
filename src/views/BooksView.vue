@@ -20,7 +20,7 @@ onMounted(async () => {
   <h2>漫画一覧</h2>
   <div :class="$style.books">
     <div v-for="book in books" :key="book.id" :class="$style.book">
-      <router-link :to="`books/${book.id}`">
+      <router-link :to="`manga/${book.id}`">
         <img :src="book.imageUrl" :alt="book.title" />
       </router-link>
       <p>{{ book.title }}</p>
