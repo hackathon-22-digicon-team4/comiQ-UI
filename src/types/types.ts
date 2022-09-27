@@ -2,6 +2,9 @@ export interface Book {
   id: string;
   title: string;
   bookSeriesId: string;
+  bookSeriesTitle: string;
+  authorId: string;
+  authorName: string;
   totalPages: number;
   imageUrl: string;
 }
