@@ -95,7 +95,6 @@ watch(
   height: 100%;
 }
 .manga {
-  display: inline-block;
   width: 30%;
   height: 70vh;
   background-color: white;

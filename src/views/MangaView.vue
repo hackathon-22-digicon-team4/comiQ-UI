@@ -55,11 +55,12 @@ onMounted(async () => {
       @select-stamp="handleSelectStamp($event)"
     />
   </div>
-  {{ bookDetail }}
 </template>
 
 <style module lang="scss">
 .mangaComesHere {
+  display: flex;
+  justify-content: center;
   border: 1px solid black;
   width: 80%;
   text-align: center;
