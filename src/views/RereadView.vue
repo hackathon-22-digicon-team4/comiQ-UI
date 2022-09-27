@@ -3,10 +3,7 @@ import StampCarousel from "@/components/reread/StampCarousel.vue";
 import { ref, onMounted } from "vue";
 import MangaCarousel from "@/components/reread/MangaCarousel.vue";
 import axios from "axios";
-import { useUserStore } from "@/stores/users";
 import type { BookUserStamp, Stamp } from "@/types/types";
-
-const userStore = useUserStore();
 
 const selectedStamp = ref<string>("");
 const bookUserStamps = ref<BookUserStamp[]>([]);
@@ -14,7 +11,7 @@ const stamps = ref<Stamp[]>([]);
 
 async function handleSelectStamp(stamp: string) {
   selectedStamp.value = stamp;
-  const res = await axios.get(`/v1/book_user_stamps?stampId=${stamp}&userId=${userStore.me}`);
+  const res = await axios.get(`/v1/book_user_stamps?stampId=${stamp}&users=me`);
   bookUserStamps.value = res.data.bookUserStamps;
 }
 
@@ -25,7 +22,7 @@ onMounted(async () => {
     return;
   }
   const bookUserStampResponse = await axios.get(
-    `/v1/book_user_stamps?stampId=${stampResponse.data.stamps[0].id}&userId=${userStore.me}`,
+    `/v1/book_user_stamps?stampId=${stampResponse.data.stamps[0].id}&users=me`,
   );
   bookUserStamps.value = bookUserStampResponse.data.bookUserStamps;
   selectedStamp.value = stampResponse.data.stamps[0].id;
