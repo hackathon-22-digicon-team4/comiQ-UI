@@ -22,7 +22,7 @@ watch(
 </script>
 
 <template>
-  <button @click="page++" v-if="0 < page && page < lastPage / 2" :class="$style.button">
+  <div @click="page++" v-if="0 < page && page < lastPage / 2" :class="$style.manga">
     <img
       :src="`${path0}/${props.mangaId}/${2 * page}.jpg`"
       :class="$style.imgLeft"
@@ -35,13 +35,13 @@ watch(
       @mouseover="mouseOnLeft = true"
       @mouseleave="mouseOnLeft = false"
     />
-  </button>
-  <button
+  </div>
+  <div
+    :class="$style.manga"
     @click="page++"
     v-else-if="page === 0"
     @mouseover="mouseOnLeft = true"
     @mouseleave="mouseOnLeft = false"
-    :class="$style.button"
   >
     クリックで読み始める
     <ArrowLeftCircleIcon
@@ -50,9 +50,9 @@ watch(
       @mouseover="mouseOnLeft = true"
       @mouseleave="mouseOnLeft = false"
     />
-  </button>
-  <button @click="page++" v-else>つぎの巻に進む</button>
-  <button @click="page--" v-if="0 < page && page < lastPage / 2">
+  </div>
+  <div @click="page++" v-else :class="$style.manga">つぎの巻に進む</div>
+  <div @click="page--" v-if="0 < page && page < lastPage / 2" :class="$style.manga">
     <img
       :src="`${path0}/${props.mangaId}/${2 * page - 1}.jpg`"
       :class="$style.imgRight"
@@ -65,14 +65,15 @@ watch(
       @mouseover="mouseOnRight = true"
       @mouseleave="mouseOnRight = false"
     />
-  </button>
-  <button v-else-if="page === 0" :class="$style.statistics">
+  </div>
+  <div v-else-if="page === 0" :class="[$style.statistics, $style.manga]">
     タイトル: {{ bookDetail.title }} <br />
     totalPages: {{ bookDetail.totalPages }}
-  </button>
-  <button
+  </div>
+  <div
     @click="page--"
     v-else
+    :class="$style.manga"
     @mouseover="mouseOnRight = true"
     @mouseleave="mouseOnRight = false"
   >
@@ -83,21 +84,20 @@ watch(
       @mouseover="mouseOnRight = true"
       @mouseleave="mouseOnRight = false"
     />
-  </button>
+  </div>
 </template>
 
 <style module lang="scss">
 .imgLeft {
-  width: 100%;
-  height: auto;
+  height: 100%;
 }
 .imgRight {
-  width: 100%;
-  height: auto;
+  height: 100%;
 }
-.button {
+.manga {
+  display: inline-block;
   width: 30%;
-  height: auto;
+  height: 70vh;
   background-color: white;
   border: none;
   padding: 0px;
