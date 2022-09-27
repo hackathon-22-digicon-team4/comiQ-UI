@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import StampShowComponent from "../components/StampShowComponent.vue";
 import type { Stamp, Book, BookUserStamp, BookUserStampRequest } from "../types/types";
 import MangaComponent from "../components/MangaComponent.vue";
 import MangaStampComponent from "../components/MangaStampComponent.vue";
 import axios from "axios";
+
+export type ShowStampMode = "me" | "others" | "all" | "none";
 
 interface Props {
   mangaId: string;
@@ -14,6 +16,17 @@ const props = defineProps<Props>();
 const selectedStamp = ref<string>("");
 const isMyStampShow = ref<boolean>(true);
 const isOtherStampShow = ref<boolean>(true);
+const showStampMode = computed<ShowStampMode>(() => {
+  if (isMyStampShow.value && isOtherStampShow.value) {
+    return "all";
+  } else if (isMyStampShow.value) {
+    return "me";
+  } else if (isOtherStampShow.value) {
+    return "others";
+  } else {
+    return "none";
+  }
+});
 const stamps = ref<Stamp[]>([]);
 const bookUserStamps = ref<BookUserStamp[]>([]);
 const manga = ref<Book>({} as Book);
@@ -23,14 +36,23 @@ function handleSelectStamp(stamp: string) {
 }
 function handleChangeMyStampShow() {
   isMyStampShow.value = !isMyStampShow.value;
+  getBookUserStamps();
 }
 function handleChangeOtherStampShow() {
   isOtherStampShow.value = !isOtherStampShow.value;
+  getBookUserStamps();
+}
+
+async function getBookUserStamps() {
+  const res = await axios.get(
+    `/v1/book_user_stamps?bookId=${props.mangaId}&users=${showStampMode.value}`,
+  );
+  bookUserStamps.value = res.data.bookUserStamps;
 }
 
 async function addStamp(BookUserStamp: BookUserStampRequest) {
-  //const res = await axios.post("/v1/book_user_stamps", BookUserStamp);
-  //bookUserStamps.value.push(res.data);
+  const res = await axios.post("/v1/book_user_stamps", BookUserStamp);
+  bookUserStamps.value.push(res.data);
   bookUserStamps.value.push({
     id: "aaa",
     bookId: "a",
@@ -40,11 +62,12 @@ async function addStamp(BookUserStamp: BookUserStampRequest) {
     userId: "aaa",
     stampId: BookUserStamp.stampId,
     bookPageImageUrl: "https://q.trap.jp/api/v3/public/icon/mehm8128",
-  });
+  }); //あとで消す
+  selectedStamp.value = "";
 }
 
 async function deleteStamp(id: string) {
-  //await axios.delete(`/v1/book_user_stamps/${id}`);
+  await axios.delete(`/v1/book_user_stamps/${id}`);
   bookUserStamps.value = bookUserStamps.value.filter((bookUserStamp) => bookUserStamp.id !== id);
 }
 
@@ -58,6 +81,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  {{ bookUserStamps.length }}
   <StampShowComponent
     :is-my-stamp-show="isMyStampShow"
     :is-other-stamp-show="isOtherStampShow"

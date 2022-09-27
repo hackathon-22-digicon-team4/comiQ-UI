@@ -19,7 +19,7 @@ const emit = defineEmits<{
 }>();
 
 const page = ref(1); // 2*page, 2*page+1ページが写し出されている
-const lastPage = ref(10);
+const lastPage = ref(props.manga.totalPages);
 const path0 = "../../contents";
 const mouseOnLeft = ref(false);
 const mouseOnRight = ref(false);
