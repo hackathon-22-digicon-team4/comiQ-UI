@@ -2,7 +2,14 @@
 
 <template>
   <div :class="$style.container">
-    <router-link to="/bookSeries">漫画シリーズ一覧へ</router-link>
+    <ul>
+      <li>
+        <router-link to="/bookSeries">漫画シリーズ一覧へ</router-link>
+      </li>
+      <li>
+        <router-link to="/reread">あの場面をもう一度</router-link>
+      </li>
+    </ul>
   </div>
 </template>
 
