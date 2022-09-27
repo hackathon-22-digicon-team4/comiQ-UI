@@ -3,6 +3,9 @@ import axios from "axios";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
+import { useUserStore } from "@/stores/users";
+const userStore = useUserStore();
+
 const router = useRouter();
 
 const id = ref("");
@@ -15,6 +18,7 @@ async function login() {
       password: password.value,
     });
     alert("logged in");
+    userStore.me = id;
     router.push("/");
   } catch {
     alert("failed to login");
