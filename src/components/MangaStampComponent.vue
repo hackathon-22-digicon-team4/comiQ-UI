@@ -63,7 +63,7 @@ function closeModal() {
 .modalButton {
   width: 5%;
   cursor: pointer;
-  background-color: rgb(219, 219, 219);
+  background-color: rgb(240, 240, 240);
 }
 .container {
   display: flex;

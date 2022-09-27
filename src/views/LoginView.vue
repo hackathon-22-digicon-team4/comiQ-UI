@@ -69,13 +69,14 @@ async function signup() {
 .buttons {
   display: flex;
   justify-content: space-around;
-  padding: 8px 0;
+  padding: 12px 0;
 
   button {
     border: solid 1px black;
     background-color: #fff;
     cursor: pointer;
     border-radius: 8px;
+    padding: 2px 4px;
   }
 }
 </style>

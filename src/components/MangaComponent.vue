@@ -2,7 +2,7 @@
 import { computed, ref } from "vue";
 import { XMarkIcon } from "@heroicons/vue/20/solid";
 import { ArrowLeftCircleIcon, ArrowRightCircleIcon } from "@heroicons/vue/24/solid";
-import type { BookUserStamp, Book, BookUserStampRequest } from "@/types/types";
+import type { BookUserStamp, Book, BookUserStampRequest, Stamp } from "@/types/types";
 
 type Direction = "left" | "right";
 
@@ -10,6 +10,7 @@ interface Props {
   manga: Book;
   selectedStamp: string;
   bookUserStamps: BookUserStamp[];
+  stamps: Stamp[];
 }
 
 const props = defineProps<Props>();

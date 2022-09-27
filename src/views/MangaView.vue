@@ -44,6 +44,10 @@ function handleChangeOtherStampShow() {
 }
 
 async function getBookUserStamps() {
+  if (showStampMode.value === "none") {
+    bookUserStamps.value = [];
+    return;
+  }
   const res = await axios.get(
     `/v1/book_user_stamps?bookId=${props.mangaId}&users=${showStampMode.value}`,
   );
@@ -83,6 +87,7 @@ onMounted(async () => {
       :book-user-stamps="bookUserStamps"
       @add-stamp="addStamp($event)"
       @delete-stamp="deleteStamp($event)"
+      :stamps="stamps"
     />
   </div>
   <div :class="$style.stampComesHere">
