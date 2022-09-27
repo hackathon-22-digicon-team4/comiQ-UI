@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
 import { EllipsisHorizontalCircleIcon } from "@heroicons/vue/24/outline";
-import axios from "axios";
 import type { Stamp } from "../types/types";
 
 interface Props {
   selectedStamp: string;
+  stamps: Stamp[];
 }
 const props = defineProps<Props>();
 const emit = defineEmits<{
@@ -18,13 +17,6 @@ function handleSelectStamp(stamp: string) {
 function foo() {
   console.log("Not Implemented");
 }
-
-const stamps = ref<Stamp[]>([]);
-
-onMounted(async () => {
-  const stampResponse = await axios.get("/v1/stamps");
-  stamps.value = stampResponse.data.stamps;
-});
 </script>
 
 <template>

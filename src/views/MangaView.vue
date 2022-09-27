@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import axios from "axios";
 import { useUserStore } from "@/stores/users";
 import MangaComponent from "../components/MangaComponent.vue";
 import MangaStampComponent from "../components/MangaStampComponent.vue";
 import StampShowComponent from "../components/StampShowComponent.vue";
+import type { Stamp } from "../types/types";
 
 const userStore = useUserStore();
 interface Props {
@@ -14,6 +15,7 @@ const props = defineProps<Props>();
 const selectedStamp = ref<string>("");
 const isMyStampShow = ref<boolean>(true);
 const isOtherStampShow = ref<boolean>(true);
+const stamps = ref<Stamp[]>([]);
 
 function handleSelectStamp(stamp: string) {
   selectedStamp.value = stamp;
@@ -24,6 +26,10 @@ function handleChangeMyStampShow() {
 function handleChangeOtherStampShow() {
   isOtherStampShow.value = !isOtherStampShow.value;
 }
+onMounted(async () => {
+  const stampResponse = await axios.get("/v1/stamps");
+  stamps.value = stampResponse.data.stamps;
+});
 </script>
 
 <template>
@@ -39,6 +45,7 @@ function handleChangeOtherStampShow() {
   <div :class="$style.stampComesHere">
     <MangaStampComponent
       :selected-stamp="selectedStamp"
+      :stamps="stamps"
       @select-stamp="handleSelectStamp($event)"
     />
   </div>
