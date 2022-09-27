@@ -1,7 +1,20 @@
 <script setup lang="ts">
 import { useUserStore } from "@/stores/users";
+import { useRouter } from "vue-router";
+import axios from "axios";
 
+const router = useRouter();
 const userStore = useUserStore();
+
+async function logout() {
+  try {
+    await axios.post("/v1/users/logout");
+    userStore.me = "";
+    router.push("/login/");
+  } catch {
+    alert("failed to logout");
+  }
+}
 </script>
 
 <template>
@@ -9,7 +22,11 @@ const userStore = useUserStore();
     <h1>
       <router-link to="/">comiQ</router-link>
     </h1>
-    <span>{{ userStore.me }}でログイン中</span>
+    <div v-if="userStore.me !== ''" :class="$style.isLogin">
+      <span>{{ userStore.me }}でログイン中</span>
+      <button @click="logout" :class="$style.button">ログアウト</button>
+    </div>
+    <router-link v-else :class="$style.button" to="/login/">ログイン</router-link>
   </header>
 </template>
 
@@ -29,6 +46,24 @@ header {
       color: black;
       text-decoration: none;
     }
+  }
+}
+
+.button {
+  border: solid 1px black;
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 2px 4px;
+  text-decoration: none;
+  color: black;
+}
+
+.isLogin {
+  display: flex;
+  align-items: center;
+  button {
+    margin-left: 8px;
   }
 }
 </style>

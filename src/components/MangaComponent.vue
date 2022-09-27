@@ -14,7 +14,7 @@ const mouseOnRight = ref(false);
 </script>
 
 <template>
-  <button @click="page < lastPage / 2 && page++">
+  <button @click="page < lastPage / 2 && page++" :class="$style.button">
     <img
       :src="`${path0}/${props.mangaId}/${2 * page}.jpg`"
       :class="$style.imgLeft"
@@ -28,7 +28,7 @@ const mouseOnRight = ref(false);
       @mouseleave="mouseOnLeft = false"
     />
   </button>
-  <button @click="page > 1 && page--">
+  <button @click="page > 1 && page--" :class="$style.button">
     <img
       :src="`${path0}/${props.mangaId}/${2 * page - 1}.jpg`"
       :class="$style.imgRight"
@@ -53,7 +53,7 @@ const mouseOnRight = ref(false);
   width: 100%;
   height: auto;
 }
-button {
+.button {
   width: 30%;
   height: auto;
   background-color: white;
