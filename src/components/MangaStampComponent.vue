@@ -1,12 +1,6 @@
 <script setup lang="ts">
 import { EllipsisHorizontalCircleIcon } from "@heroicons/vue/24/outline";
 import type { Stamp } from "../types/types";
-import s_fuffuffu from "@/assets/1.png";
-import s_kandoushita from "@/assets/2.png";
-import s_koresuki from "@/assets/3.png";
-import s_oisu from "@/assets/4.png";
-import s_souhanaranyaro from "@/assets/5.png";
-import s_tasukaru from "@/assets/6.png";
 import StampModal from "./StampModal.vue";
 import { ref } from "vue";
 
@@ -20,20 +14,6 @@ const emit = defineEmits<{
 }>();
 
 const isModalOpen = ref(false);
-const stamps: Stamp[] = [
-  { name: "これすき", id: "1", imageUrl: s_koresuki },
-  { name: "感動した", id: "3", imageUrl: s_kandoushita },
-  { name: "そうはならんやろ", id: "4", imageUrl: s_souhanaranyaro },
-  { name: "おいすー", id: "5", imageUrl: s_oisu },
-  { name: "フッフッフ", id: "6", imageUrl: s_fuffuffu },
-  { name: "たすかる", id: "7", imageUrl: s_tasukaru },
-  { name: "これすき", id: "1", imageUrl: s_koresuki },
-  { name: "感動した", id: "3", imageUrl: s_kandoushita },
-  { name: "そうはならんやろ", id: "4", imageUrl: s_souhanaranyaro },
-  { name: "おいすー", id: "5", imageUrl: s_oisu },
-  { name: "フッフッフ", id: "6", imageUrl: s_fuffuffu },
-  { name: "たすかる", id: "7", imageUrl: s_tasukaru },
-];
 
 function handleSelectStamp(stamp: string) {
   emit("selectStamp", stamp);
