@@ -9,7 +9,7 @@ interface Props {
 }
 const props = defineProps<Props>();
 const page = ref(1); // 2*page, 2*page+1ページが写し出されている
-const lastPage = ref(88);
+const lastPage = ref(10);
 const path0 = "../../contents";
 const mouseOnLeft = ref(false);
 const mouseOnRight = ref(false);
@@ -37,7 +37,7 @@ watch(
     />
   </div>
   <div
-    :class="$style.manga"
+    :class="[$style.manga, $style.firstPage]"
     @click="page++"
     v-else-if="page === 0"
     @mouseover="mouseOnLeft = true"
@@ -51,7 +51,7 @@ watch(
       @mouseleave="mouseOnLeft = false"
     />
   </div>
-  <div @click="page++" v-else :class="$style.manga">つぎの巻に進む</div>
+  <div @click="page++" v-else :class="[$style.manga, $style.lastPage]">つぎの巻に進む</div>
   <div @click="page--" v-if="0 < page && page < lastPage / 2" :class="$style.manga">
     <img
       :src="`${path0}/${props.mangaId}/${2 * page - 1}.jpg`"
@@ -66,14 +66,15 @@ watch(
       @mouseleave="mouseOnRight = false"
     />
   </div>
-  <div v-else-if="page === 0" :class="[$style.statistics, $style.manga]">
-    タイトル: {{ bookDetail.title }} <br />
-    totalPages: {{ bookDetail.totalPages }}
+  <div v-else-if="page === 0" :class="[$style.manga, $style.firstPage]">
+    <h2>タイトル: {{ bookDetail.title }}</h2>
+    <p>著者：APIに追加されたら追記</p>
+    <p>totalPages: {{ bookDetail.totalPages }}</p>
   </div>
   <div
     @click="page--"
     v-else
-    :class="$style.manga"
+    :class="[$style.manga, $style.lastPage]"
     @mouseover="mouseOnRight = true"
     @mouseleave="mouseOnRight = false"
   >
@@ -119,7 +120,12 @@ watch(
   transform: translate(0, -50%);
 }
 
-.statistics {
-  white-space: pre;
+.firstPage,
+.lastPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border: solid 1px black;
 }
 </style>
