@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
+import { EllipsisHorizontalCircleIcon } from "@heroicons/vue/24/outline";
 import axios from "axios";
 import type { Stamp } from "../types/types";
 
@@ -11,7 +12,7 @@ const emit = defineEmits<{
   (event: "selectStamp", stampId: string): void;
 }>();
 
-function handleSelected(stamp: string) {
+function handleSelectStamp(stamp: string) {
   emit("selectStamp", stamp);
 }
 function foo() {
@@ -23,10 +24,6 @@ const stamps = ref<Stamp[]>([]);
 onMounted(async () => {
   const stampResponse = await axios.get("/v1/stamps");
   stamps.value = stampResponse.data.stamps;
-  if (stamps.value.length === 0) {
-    return;
-  }
-  emit("selectStamp", stampResponse.data.stamps[0].id);
 });
 </script>
 
@@ -36,19 +33,22 @@ onMounted(async () => {
       v-for="stamp in stamps"
       :key="stamp.id"
       :class="$style.stampButton"
-      :isSelected="selectedStamp === stamp.id"
-      @click="handleSelected(stamp.id)"
+      :is-selected="selectedStamp === stamp.id"
+      @click="handleSelectStamp(stamp.id)"
     >
-      <img :src="stamp.imageUrl" :class="$style.stampImg" />
+      <img :src="stamp.imageUrl" :class="$style.stampImg" :alt="stamp.name" />
     </button>
-    <button :class="$style.modalButton" @click="foo">・</button>
+    <button :class="$style.modalButton" @click="foo">
+      <EllipsisHorizontalCircleIcon />
+    </button>
   </div>
 </template>
 
 <style module lang="scss">
 .stampButton {
-  &[isSelected="true"] {
+  &[is-selected="true"] {
     border: 1px solid;
+    background-color: rgb(184, 255, 255);
   }
 }
 .stampImg {
@@ -56,7 +56,7 @@ onMounted(async () => {
   height: auto;
 }
 .modalButton {
-  width: 10%;
+  width: 5%;
   height: 100%;
   background-color: rgb(219, 219, 219);
 }

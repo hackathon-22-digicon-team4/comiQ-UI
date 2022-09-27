@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
 import { UserIcon, UserGroupIcon } from "@heroicons/vue/24/solid";
 interface Props {
   isMyStampShow: boolean;
@@ -10,23 +9,27 @@ const emit = defineEmits<{
   (event: "changeMyStampShow"): void;
   (event: "changeOtherStampShow"): void;
 }>();
-function _changeMyStampShow() {
+function handleChangeMyStampShow() {
   emit("changeMyStampShow");
 }
-function _changeOtherStampShow() {
+function handleChangeOtherStampShow() {
   emit("changeOtherStampShow");
 }
 </script>
 
 <template>
   <div :class="$style.container">
-    <button @click="_changeMyStampShow()" :class="$style.userButton" :isMyStampShow="isMyStampShow">
+    <button
+      @click="handleChangeMyStampShow()"
+      :class="$style.userButton"
+      :is-my-stamp-show="isMyStampShow"
+    >
       <UserIcon />
     </button>
     <button
-      @click="_changeOtherStampShow()"
+      @click="handleChangeOtherStampShow()"
       :class="$style.usersButton"
-      :isOtherStampShow="isOtherStampShow"
+      :is-other-stamp-show="isOtherStampShow"
     >
       <UserGroupIcon />
     </button>
@@ -36,13 +39,15 @@ function _changeOtherStampShow() {
 <style module lang="scss">
 .userButton {
   width: 5%;
-  &[isMyStampShow="false"] {
+  cursor: pointer;
+  &[is-my-stamp-show="false"] {
     opacity: 0.1;
   }
 }
 .usersButton {
   width: 5%;
-  &[isOtherStampShow="false"] {
+  cursor: pointer;
+  &[is-other-stamp-show="false"] {
     opacity: 0.1;
   }
 }

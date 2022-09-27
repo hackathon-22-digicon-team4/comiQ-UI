@@ -15,26 +15,26 @@ const selectedStamp = ref<string>("");
 const isMyStampShow = ref<boolean>(true);
 const isOtherStampShow = ref<boolean>(true);
 
-async function handleSelectStamp(stamp: string) {
+function handleSelectStamp(stamp: string) {
   selectedStamp.value = stamp;
 }
-function changeMyStampShow() {
-  isMyStampShow.value = isMyStampShow.value !== true;
+function handleChangeMyStampShow() {
+  isMyStampShow.value = !isMyStampShow.value;
 }
-function changeOtherStampShow() {
-  isOtherStampShow.value = isOtherStampShow.value !== true;
+function handleChangeOtherStampShow() {
+  isOtherStampShow.value = !isOtherStampShow.value;
 }
 </script>
 
 <template>
   <StampShowComponent
-    :isMyStampShow="isMyStampShow"
-    :isOtherStampShow="isOtherStampShow"
-    @changeMyStampShow="changeMyStampShow"
-    @changeOtherStampShow="changeOtherStampShow"
+    :is-my-stamp-show="isMyStampShow"
+    :is-other-stamp-show="isOtherStampShow"
+    @change-my-stamp-show="handleChangeMyStampShow"
+    @change-other-stamp-show="handleChangeOtherStampShow"
   />
   <div :class="$style.mangaComesHere">
-    <MangaComponent :mangaId="props.mangaId" />
+    <MangaComponent :manga-id="props.mangaId" />
   </div>
   <div :class="$style.stampComesHere">
     <MangaStampComponent
@@ -56,5 +56,6 @@ function changeOtherStampShow() {
   width: 80%;
   text-align: center;
   margin: auto;
+  margin-top: 1%;
 }
 </style>
