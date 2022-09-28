@@ -11,17 +11,14 @@ const stamps = ref<Stamp[]>([]);
 
 async function handleSelectStamp(stamp: string) {
   selectedStamp.value = stamp;
-  const res = await axios.get(
-    `https://api.comiq.kyosutech.com/v1/book_user_stamps?stampId=${stamp}&users=me`,
-    {
-      withCredentials: true,
-    },
-  );
+  const res = await axios.get(`/v1/book_user_stamps?stampId=${stamp}&users=me`, {
+    withCredentials: true,
+  });
   bookUserStamps.value = res.data.bookUserStamps;
 }
 
 onMounted(async () => {
-  const stampResponse = await axios.get("https://api.comiq.kyosutech.com/v1/stamps", {
+  const stampResponse = await axios.get("/v1/stamps", {
     withCredentials: true,
   });
   stamps.value = stampResponse.data.stamps;
@@ -29,7 +26,7 @@ onMounted(async () => {
     return;
   }
   const bookUserStampResponse = await axios.get(
-    `https://api.comiq.kyosutech.comhttps://api.comiq.kyosutech.com/v1/book_user_stamps?stampId=${stampResponse.data.stamps[0].id}&users=me`,
+    `/v1/book_user_stamps?stampId=${stampResponse.data.stamps[0].id}&users=me`,
     {
       withCredentials: true,
     },

@@ -6,7 +6,7 @@ import type { BookSeries } from "@/types/types";
 const bookSeriesList = ref<BookSeries[]>();
 
 onMounted(async () => {
-  const res = await axios.get("https://api.comiq.kyosutech.com/v1/book_series", {
+  const res = await axios.get("/v1/book_series", {
     withCredentials: true,
   });
   bookSeriesList.value = res.data.bookSeries;

@@ -14,7 +14,7 @@ const password = ref("");
 async function login() {
   try {
     await axios.post(
-      "https://api.comiq.kyosutech.com/v1/users/login",
+      "/v1/users/login",
       {
         id: id.value,
         password: password.value,
@@ -33,7 +33,7 @@ async function login() {
 async function signup() {
   try {
     await axios.post(
-      "https://api.comiq.kyosutech.com/v1/users/signup",
+      "/v1/users/signup",
       {
         id: id.value,
         password: password.value,
