@@ -11,7 +11,7 @@ export interface Book {
 
 export interface BookSeries {
   id: string;
-  title: string;
+  name: string;
   authorId: string;
   authorName: string;
   description: string;
@@ -42,4 +42,11 @@ export interface BookUserStampRequest {
   x: number;
   y: number;
   stampId: string;
+}
+
+export interface StampStatistics {
+  stampId: string;
+  stampName: string;
+  stampImageUrl: string;
+  count: number;
 }
