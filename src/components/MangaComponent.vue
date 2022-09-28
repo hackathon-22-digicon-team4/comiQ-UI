@@ -98,7 +98,11 @@ async function handleDeleteStamp(id: string) {
       :class="$style.stamp"
       :style="{ top: stamp.y + 'px', left: stamp.x + 'px' }"
     >
-      <img :src="stamp.bookPageImageUrl" alt="" width="32" />
+      <img
+        :src="`https://comiq-prod-assets.s3.ap-northeast-1.amazonaws.com/stamps/${stamp.id}`"
+        alt=""
+        width="32"
+      />
       <button @click="handleDeleteStamp(stamp.id)" :class="$style.deleteButton">
         <XMarkIcon :class="$style.icon" />
       </button>
@@ -143,7 +147,11 @@ async function handleDeleteStamp(id: string) {
       :class="$style.stamp"
       :style="{ top: stamp.y + 'px', left: stamp.x + 'px' }"
     >
-      <img :src="stamp.bookPageImageUrl" alt="" width="32" />
+      <img
+        :src="`https://comiq-prod-assets.s3.ap-northeast-1.amazonaws.com/stamps/${stamp.id}`"
+        alt=""
+        width="32"
+      />
       <button @click="handleDeleteStamp(stamp.id)" :class="$style.deleteButton">
         <XMarkIcon :class="$style.icon" />
       </button>
