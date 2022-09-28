@@ -99,7 +99,7 @@ async function handleDeleteStamp(id: string) {
       :style="{ top: stamp.y + 'px', left: stamp.x + 'px' }"
     >
       <img
-        :src="`https://comiq-prod-assets.s3.ap-northeast-1.amazonaws.com/stamps/${stamp.id}`"
+        :src="`https://comiq-prod-assets.s3.ap-northeast-1.amazonaws.com/stamps/${stamp.id}.jpeg`"
         alt=""
         width="32"
       />
@@ -148,7 +148,7 @@ async function handleDeleteStamp(id: string) {
       :style="{ top: stamp.y + 'px', left: stamp.x + 'px' }"
     >
       <img
-        :src="`https://comiq-prod-assets.s3.ap-northeast-1.amazonaws.com/stamps/${stamp.id}`"
+        :src="`https://comiq-prod-assets.s3.ap-northeast-1.amazonaws.com/stamps/${stamp.id}.jpeg`"
         alt=""
         width="32"
       />
