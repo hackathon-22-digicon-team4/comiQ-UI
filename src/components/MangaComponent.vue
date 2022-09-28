@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { XMarkIcon } from "@heroicons/vue/20/solid";
 import { ArrowLeftCircleIcon, ArrowRightCircleIcon } from "@heroicons/vue/24/solid";
 import type { BookUserStamp, Book, BookUserStampRequest, Stamp } from "@/types/types";
@@ -20,7 +20,7 @@ const emit = defineEmits<{
 }>();
 
 const page = ref(1); // 2*page, 2*page+1ページが写し出されている
-const lastPage = ref(props.manga.totalPages);
+const lastPage = ref(4);
 const mouseOnLeft = ref(false);
 const mouseOnRight = ref(false);
 
@@ -32,6 +32,13 @@ const leftStamps = computed(() => {
 const rightStamps = computed(() => {
   return props.bookUserStamps.filter((bookUserStamp) => bookUserStamp.pageNum === 2 * page.value);
 });
+
+watch(
+  () => props.manga,
+  (manga) => {
+    lastPage.value = manga.totalPages;
+  },
+);
 
 function movePage(direction: Direction) {
   if (direction === "right") {

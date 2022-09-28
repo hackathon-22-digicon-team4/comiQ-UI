@@ -44,11 +44,11 @@ async function signup() {
     <div :class="$style.inputForm">
       <label for="id">
         ユーザー名
-        <input type="text" v-model="id" />
+        <input type="text" v-model="id" name="username" />
       </label>
       <label for="password">
         パスワード
-        <input type="password" v-model="password" />
+        <input type="password" v-model="password" name="password" />
       </label>
     </div>
     <div :class="$style.buttons">
