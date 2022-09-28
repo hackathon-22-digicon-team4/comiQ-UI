@@ -19,7 +19,7 @@ const emit = defineEmits<{
   (event: "deleteStamp", id: string): void;
 }>();
 
-const page = ref(1); // 2*page, 2*page+1ページが写し出されている
+const page = ref(0); // 2*page, 2*page+1ページが写し出されている
 const lastPage = ref(4);
 const mouseOnLeft = ref(false);
 const mouseOnRight = ref(false);

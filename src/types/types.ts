@@ -11,7 +11,7 @@ export interface Book {
 
 export interface BookSeries {
   id: string;
-  title: string;
+  name: string;
   authorId: string;
   authorName: string;
   description: string;

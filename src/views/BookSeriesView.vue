@@ -18,9 +18,9 @@ onMounted(async () => {
   <div :class="$style.bookSeriesList">
     <div v-for="bookSeries in bookSeriesList" :key="bookSeries.id" :class="$style.bookSeries">
       <router-link :to="`bookSeries/${bookSeries.id}`">
-        <img :src="bookSeries.imageUrl" :alt="bookSeries.title" />
+        <img :src="bookSeries.imageUrl" :alt="bookSeries.name" />
       </router-link>
-      <p>{{ bookSeries.title }}</p>
+      <p>{{ bookSeries.name }}</p>
     </div>
   </div>
 </template>
