@@ -34,3 +34,12 @@ export interface BookUserStamp {
   stampId: string;
   bookPageImageUrl: string;
 }
+
+export interface BookUserStampRequest {
+  bookId: string;
+  bookSeriesId: string;
+  pageNum: number;
+  x: number;
+  y: number;
+  stampId: string;
+}

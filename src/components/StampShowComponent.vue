@@ -4,7 +4,7 @@ interface Props {
   isMyStampShow: boolean;
   isOtherStampShow: boolean;
 }
-const props = defineProps<Props>();
+defineProps<Props>();
 const emit = defineEmits<{
   (event: "changeMyStampShow"): void;
   (event: "changeOtherStampShow"): void;
@@ -38,14 +38,14 @@ function handleChangeOtherStampShow() {
 
 <style module lang="scss">
 .userButton {
-  width: 5%;
+  width: 4%;
   cursor: pointer;
   &[is-my-stamp-show="false"] {
     opacity: 0.1;
   }
 }
 .usersButton {
-  width: 5%;
+  width: 4%;
   cursor: pointer;
   &[is-other-stamp-show="false"] {
     opacity: 0.1;

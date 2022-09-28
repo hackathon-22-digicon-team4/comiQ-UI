@@ -1,59 +1,72 @@
 <script setup lang="ts">
 import { EllipsisHorizontalCircleIcon } from "@heroicons/vue/24/outline";
 import type { Stamp } from "../types/types";
+import StampModal from "./StampModal.vue";
+import { ref } from "vue";
 
 interface Props {
   selectedStamp: string;
   stamps: Stamp[];
 }
-const props = defineProps<Props>();
+defineProps<Props>();
 const emit = defineEmits<{
   (event: "selectStamp", stampId: string): void;
 }>();
 
+const isModalOpen = ref(false);
+
 function handleSelectStamp(stamp: string) {
   emit("selectStamp", stamp);
 }
-function foo() {
-  console.log("Not Implemented");
+function openModal() {
+  isModalOpen.value = true;
+}
+function closeModal() {
+  isModalOpen.value = false;
 }
 </script>
 
 <template>
   <div :class="$style.container">
     <button
-      v-for="stamp in stamps"
+      v-for="stamp in stamps.slice(0, 8)"
       :key="stamp.id"
       :class="$style.stampButton"
-      :is-selected="selectedStamp === stamp.id"
+      :data-is-selected="selectedStamp === stamp.id"
       @click="handleSelectStamp(stamp.id)"
     >
       <img :src="stamp.imageUrl" :class="$style.stampImg" :alt="stamp.name" />
     </button>
-    <button :class="$style.modalButton" @click="foo">
+    <button :class="$style.modalButton" @click="openModal">
       <EllipsisHorizontalCircleIcon />
     </button>
   </div>
+  <StampModal
+    @close-modal="closeModal"
+    v-if="isModalOpen"
+    :stamps="stamps"
+    :selected-stamp="selectedStamp"
+    @select-stamp="handleSelectStamp($event)"
+  />
 </template>
 
 <style module lang="scss">
 .stampButton {
-  &[is-selected="true"] {
-    border: 1px solid;
+  cursor: pointer;
+  &[data-is-selected="true"] {
     background-color: rgb(184, 255, 255);
   }
 }
 .stampImg {
-  width: 20%;
-  height: auto;
+  width: 40%;
 }
 .modalButton {
   width: 5%;
-  height: 100%;
-  background-color: rgb(219, 219, 219);
+  cursor: pointer;
+  background-color: rgb(240, 240, 240);
 }
 .container {
-  height: auto;
   display: flex;
+  justify-content: space-between;
 }
 </style>

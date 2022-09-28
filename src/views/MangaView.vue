@@ -1,40 +1,75 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import axios from "axios";
-import { useUserStore } from "@/stores/users";
+import { ref, onMounted, computed } from "vue";
+import StampShowComponent from "../components/StampShowComponent.vue";
+import type { Stamp, Book, BookUserStamp, BookUserStampRequest } from "../types/types";
 import MangaComponent from "../components/MangaComponent.vue";
 import MangaStampComponent from "../components/MangaStampComponent.vue";
-import StampShowComponent from "../components/StampShowComponent.vue";
-import type { Stamp, Book } from "../types/types";
+import axios from "axios";
 
-const userStore = useUserStore();
+export type ShowStampMode = "me" | "others" | "all" | "none";
+
 interface Props {
   mangaId: string;
 }
 const props = defineProps<Props>();
+
 const selectedStamp = ref<string>("");
 const isMyStampShow = ref<boolean>(true);
 const isOtherStampShow = ref<boolean>(true);
+const showStampMode = computed<ShowStampMode>(() => {
+  if (isMyStampShow.value && isOtherStampShow.value) {
+    return "all";
+  } else if (isMyStampShow.value) {
+    return "me";
+  } else if (isOtherStampShow.value) {
+    return "others";
+  } else {
+    return "none";
+  }
+});
 const stamps = ref<Stamp[]>([]);
+const bookUserStamps = ref<BookUserStamp[]>([]);
+const manga = ref<Book>({} as Book);
 
 function handleSelectStamp(stamp: string) {
   selectedStamp.value = stamp;
 }
 function handleChangeMyStampShow() {
   isMyStampShow.value = !isMyStampShow.value;
+  getBookUserStamps();
 }
 function handleChangeOtherStampShow() {
   isOtherStampShow.value = !isOtherStampShow.value;
+  getBookUserStamps();
 }
-const bookDetail = ref<Book>({} as Book);
+
+async function getBookUserStamps() {
+  if (showStampMode.value === "none") {
+    bookUserStamps.value = [];
+    return;
+  }
+  const res = await axios.get(
+    `/v1/book_user_stamps?bookId=${props.mangaId}&users=${showStampMode.value}`,
+  );
+  bookUserStamps.value = res.data.bookUserStamps;
+}
+
+async function addStamp(BookUserStamp: BookUserStampRequest) {
+  const res = await axios.post("/v1/book_user_stamps", BookUserStamp);
+  bookUserStamps.value.push(res.data);
+  selectedStamp.value = "";
+}
+
+async function deleteStamp(id: string) {
+  await axios.delete(`/v1/book_user_stamps/${id}`);
+  bookUserStamps.value = bookUserStamps.value.filter((bookUserStamp) => bookUserStamp.id !== id);
+}
 
 onMounted(async () => {
   const stampResponse = await axios.get("/v1/stamps");
   stamps.value = stampResponse.data.stamps;
-
-  const bookResponse = await axios.get(`/v1/books/${props.mangaId}`);
-  console.log(bookResponse);
-  bookDetail.value = bookResponse.data;
+  const mangaResponse = await axios.get(`/v1/books/${props.mangaId}`);
+  manga.value = mangaResponse.data;
 });
 </script>
 
@@ -46,7 +81,14 @@ onMounted(async () => {
     @change-other-stamp-show="handleChangeOtherStampShow"
   />
   <div :class="$style.mangaComesHere">
-    <MangaComponent :manga-id="props.mangaId" :book-detail="bookDetail" />
+    <MangaComponent
+      :manga="manga"
+      :selected-stamp="selectedStamp"
+      :book-user-stamps="bookUserStamps"
+      @add-stamp="addStamp($event)"
+      @delete-stamp="deleteStamp($event)"
+      :stamps="stamps"
+    />
   </div>
   <div :class="$style.stampComesHere">
     <MangaStampComponent

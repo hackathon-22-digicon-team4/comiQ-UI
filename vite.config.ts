@@ -16,7 +16,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       "/v1": {
-        target: "http://localhost:50001",
+        target: "https://api.comiq.kyosutech.com",
         changeOrigin: true,
       },
     },
