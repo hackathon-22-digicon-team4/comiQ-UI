@@ -8,7 +8,13 @@ const userStore = useUserStore();
 
 async function logout() {
   try {
-    await axios.post("https://api.comiq.kyosutech.com/v1/users/logout");
+    await axios.post(
+      "https://api.comiq.kyosutech.com/v1/users/logout",
+      {},
+      {
+        withCredentials: true,
+      },
+    );
     userStore.me = "";
     router.push("/login/");
   } catch {
