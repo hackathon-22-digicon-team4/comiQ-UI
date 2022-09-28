@@ -14,7 +14,7 @@ const props = defineProps<Props>();
   <div v-if="bookUserStamps.length === 0">まだこのスタンプを押したことがありません。</div>
   <Carousel v-else :items-to-show="4" wrap-around :autoplay="2000" class="mangaCarousel">
     <Slide v-for="bookUserStamp in props.bookUserStamps" :key="bookUserStamp.id">
-      <router-link :to="`book/${bookUserStamp.bookId}?page=${bookUserStamp.pageNum}`">
+      <router-link :to="`manga/${bookUserStamp.bookId}?page=${bookUserStamp.pageNum}`">
         <img alt="" :src="bookUserStamp.bookPageImageUrl" height="400" />
       </router-link>
     </Slide>
