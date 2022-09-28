@@ -11,7 +11,9 @@ const books = ref<Book[]>();
 const id = parseParamToId(route.params.id);
 
 onMounted(async () => {
-  const res = await axios.get(`https://api.comiq.kyosutech.com/v1/book_series/${id}/books`);
+  const res = await axios.get(`https://api.comiq.kyosutech.com/v1/book_series/${id}/books`, {
+    withCredentials: true,
+  });
   books.value = res.data.books;
 });
 </script>
