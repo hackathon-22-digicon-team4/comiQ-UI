@@ -8,7 +8,7 @@ const userStore = useUserStore();
 
 async function logout() {
   try {
-    await axios.post("/v1/users/logout");
+    await axios.post("https://api.comiq.kyosutech.com/v1/users/logout");
     userStore.me = "";
     router.push("/login/");
   } catch {

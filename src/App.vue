@@ -9,7 +9,7 @@ const userStore = useUserStore();
 
 onMounted(async () => {
   try {
-    const me = await axios.get("/v1/users/me");
+    const me = await axios.get("https://api.comiq.kyosutech.com/v1/users/me");
     userStore.me = me.data.id;
   } catch (err) {
     alert(err);
