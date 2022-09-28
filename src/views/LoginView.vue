@@ -13,16 +13,10 @@ const password = ref("");
 
 async function login() {
   try {
-    await axios.post(
-      "/v1/users/login",
-      {
-        id: id.value,
-        password: password.value,
-      },
-      {
-        withCredentials: true,
-      },
-    );
+    await axios.post("https://api.comiq.kyosutech.com/v1/users/login", {
+      id: id.value,
+      password: password.value,
+    });
     alert("logged in");
     userStore.me = id.value;
     router.push("/");
@@ -32,16 +26,10 @@ async function login() {
 }
 async function signup() {
   try {
-    await axios.post(
-      "/v1/users/signup",
-      {
-        id: id.value,
-        password: password.value,
-      },
-      {
-        withCredentials: true,
-      },
-    );
+    await axios.post("https://api.comiq.kyosutech.com/v1/users/signup", {
+      id: id.value,
+      password: password.value,
+    });
     alert("signed up");
     router.push("/");
   } catch {

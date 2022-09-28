@@ -81,7 +81,7 @@ async function handleDeleteStamp(id: string) {
     :class="$style.manga"
   >
     <img
-      :src="`${manga.imageUrl}/${2 * page}.jpg`"
+      :src="`${manga.imageUrl}/${2 * page}.jpeg`"
       :class="$style.imgLeft"
       @mouseover="mouseOnLeft = true"
       @mouseleave="mouseOnLeft = false"
@@ -126,7 +126,7 @@ async function handleDeleteStamp(id: string) {
     :class="$style.manga"
   >
     <img
-      :src="`${manga.imageUrl}/${2 * page - 1}.jpg`"
+      :src="`${manga.imageUrl}/${2 * page - 1}.jpeg`"
       :class="$style.imgRight"
       @mouseover="mouseOnRight = true"
       @mouseleave="mouseOnRight = false"

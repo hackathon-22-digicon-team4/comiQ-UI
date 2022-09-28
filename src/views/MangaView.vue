@@ -49,37 +49,31 @@ async function getBookUserStamps() {
     return;
   }
   const res = await axios.get(
-    `/v1/book_user_stamps?bookId=${props.mangaId}&users=${showStampMode.value}`,
-    {
-      withCredentials: true,
-    },
+    `https://api.comiq.kyosutech.com/v1/book_user_stamps?bookId=${props.mangaId}&users=${showStampMode.value}`,
   );
   bookUserStamps.value = res.data.bookUserStamps;
 }
 
 async function addStamp(BookUserStamp: BookUserStampRequest) {
-  const res = await axios.post("/v1/book_user_stamps", BookUserStamp, {
-    withCredentials: true,
-  });
+  const res = await axios.post(
+    "https://api.comiq.kyosutech.com/v1/book_user_stamps",
+    BookUserStamp,
+  );
   bookUserStamps.value.push(res.data);
   selectedStamp.value = "";
 }
 
 async function deleteStamp(id: string) {
-  await axios.delete(`/v1/book_user_stamps/${id}`, {
-    withCredentials: true,
-  });
+  await axios.delete(`https://api.comiq.kyosutech.com/v1/book_user_stamps/${id}`);
   bookUserStamps.value = bookUserStamps.value.filter((bookUserStamp) => bookUserStamp.id !== id);
 }
 
 onMounted(async () => {
-  const stampResponse = await axios.get("/v1/stamps", {
-    withCredentials: true,
-  });
+  const stampResponse = await axios.get("https://api.comiq.kyosutech.com/v1/stamps");
   stamps.value = stampResponse.data.stamps;
-  const mangaResponse = await axios.get(`/v1/books/${props.mangaId}`, {
-    withCredentials: true,
-  });
+  const mangaResponse = await axios.get(
+    `https://api.comiq.kyosutech.com/v1/books/${props.mangaId}`,
+  );
   manga.value = { ...mangaResponse.data, imageUrl: mangaResponse.data.imageUrl.slice(0, -5) };
 });
 </script>
