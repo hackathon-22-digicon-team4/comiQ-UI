@@ -5,7 +5,7 @@
 サーバーのリポジトリはこちら。
 https://github.com/hackathon-22-digicon-team4/comiQ-server
 
-## 使い方
+## 起動方法
 
 ```
 $ npm install
