@@ -27,7 +27,7 @@ watch(
         pageNum: bookUserStamp.pageNum,
       });
     }
-    pages.value = Array.from(new Set(pages.value));
+    pages.value = Array.from(new Map(pages.value.map((page) => [page.pageNum, page])).values());
   },
 );
 </script>
