@@ -102,6 +102,8 @@ onMounted(async () => {
   );
   console.table(stampStatisticsResponse);
   stampStatistics.value = stampStatisticsResponse.data.bookUserStampCounts;
+  
+  getBookUserStamps();
 });
 </script>
 
