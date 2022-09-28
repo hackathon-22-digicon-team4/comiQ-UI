@@ -13,7 +13,7 @@ const router = useRouter();
 <style module lang="scss">
 .container {
   padding-top: 12px;
-  flex-direction: column;
+  display: flex;
 }
 .button1 {
   cursor: pointer;
@@ -27,6 +27,6 @@ const router = useRouter();
   padding: 7px;
   margin: 4px;
   color: white;
-  background-color: #eb6100;
+  background-color: rgb(104, 107, 255);
 }
 </style>
