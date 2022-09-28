@@ -43,3 +43,10 @@ export interface BookUserStampRequest {
   y: number;
   stampId: string;
 }
+
+export interface StampStatistics {
+  stampId: string;
+  stampName: string;
+  stampImageUrl: string;
+  count: number;
+}

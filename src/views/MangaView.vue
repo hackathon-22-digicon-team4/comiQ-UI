@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from "vue";
 import StampShowComponent from "../components/StampShowComponent.vue";
-import type { Stamp, Book, BookUserStamp, BookUserStampRequest } from "../types/types";
+import type {
+  Stamp,
+  Book,
+  BookUserStamp,
+  BookUserStampRequest,
+  StampStatistics,
+} from "../types/types";
 import MangaComponent from "../components/MangaComponent.vue";
 import MangaStampComponent from "../components/MangaStampComponent.vue";
 import axios from "axios";
@@ -30,6 +36,7 @@ const showStampMode = computed<ShowStampMode>(() => {
 const stamps = ref<Stamp[]>([]);
 const bookUserStamps = ref<BookUserStamp[]>([]);
 const manga = ref<Book>({} as Book);
+const stampStatistics = ref<StampStatistics[]>([]);
 
 function handleSelectStamp(stamp: string) {
   selectedStamp.value = stamp;
@@ -88,6 +95,13 @@ onMounted(async () => {
     },
   );
   manga.value = { ...mangaResponse.data, imageUrl: mangaResponse.data.imageUrl.slice(0, -5) };
+
+  const stampStatisticsResponse = await axios.get(
+    `https://api.comiq.kyosutech.com/v1/book_user_stamp_counts?bookSeriesId=${manga.value.bookSeriesId}?bookId=${props.mangaId}`,
+    { withCredentials: true },
+  );
+  console.table(stampStatisticsResponse);
+  stampStatistics.value = stampStatisticsResponse.data.bookUserStampCounts;
 });
 </script>
 
@@ -106,6 +120,7 @@ onMounted(async () => {
       @add-stamp="addStamp($event)"
       @delete-stamp="deleteStamp($event)"
       :stamps="stamps"
+      :stamp-statistics="stampStatistics"
     />
   </div>
   <div :class="$style.stampComesHere">

@@ -2,7 +2,13 @@
 import { computed, ref, watch } from "vue";
 import { XMarkIcon } from "@heroicons/vue/20/solid";
 import { ArrowLeftCircleIcon, ArrowRightCircleIcon } from "@heroicons/vue/24/solid";
-import type { BookUserStamp, Book, BookUserStampRequest, Stamp } from "@/types/types";
+import type {
+  BookUserStamp,
+  Book,
+  BookUserStampRequest,
+  Stamp,
+  StampStatistics,
+} from "@/types/types";
 
 type Direction = "left" | "right";
 
@@ -11,6 +17,7 @@ interface Props {
   selectedStamp: string;
   bookUserStamps: BookUserStamp[];
   stamps: Stamp[];
+  stampStatistics: StampStatistics[];
 }
 
 const props = defineProps<Props>();
@@ -161,6 +168,11 @@ async function handleDeleteStamp(id: string) {
     <h2>{{ manga.title }}</h2>
     <p>著者：{{ manga.authorName }}</p>
     <p>総ページ数: {{ manga.totalPages }}</p>
+    <p>使用頻度の多いスタンプ</p>
+    <p v-for="(st, index) in stampStatistics" :key="index">
+      <img :src="st.stampImageUrl" /> {{ st.count }}回
+    </p>
+    <p>{{ stampStatistics }}</p>
   </div>
   <div
     @click="page--"
