@@ -74,7 +74,7 @@ onMounted(async () => {
   const mangaResponse = await axios.get(
     `https://api.comiq.kyosutech.com/v1/books/${props.mangaId}`,
   );
-  manga.value = mangaResponse.data;
+  manga.value = { ...mangaResponse.data, imageUrl: mangaResponse.data.imageUrl.slice(0, -5) };
 });
 </script>
 
