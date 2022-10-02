@@ -18,6 +18,7 @@ interface Props {
   bookUserStamps: BookUserStamp[];
   stamps: Stamp[];
   stampStatistics: StampStatistics[];
+  defaultPage: number;
 }
 
 const props = defineProps<Props>();
@@ -26,7 +27,7 @@ const emit = defineEmits<{
   (event: "deleteStamp", id: string): void;
 }>();
 
-const page = ref(0); // 2*page, 2*page+1ページが写し出されている
+const page = ref(props.defaultPage); // 2*page, 2*page+1ページが写し出されている
 const lastPage = ref(4);
 const mouseOnLeft = ref(false);
 const mouseOnRight = ref(false);
@@ -168,11 +169,18 @@ async function handleDeleteStamp(id: string) {
     <h2>{{ manga.title }}</h2>
     <p>著者：{{ manga.authorName }}</p>
     <p>総ページ数: {{ manga.totalPages }}</p>
-    <p>使用頻度の多いスタンプ</p>
-    <p v-for="(st, index) in stampStatistics" :key="index">
-      <img :src="st.stampImageUrl" /> {{ st.count }}回
-    </p>
-    <p>{{ stampStatistics }}</p>
+    <p>使用回数の多いスタンプ</p>
+    <ol>
+      <li
+        v-for="(st, i) in stampStatistics.slice(0, 3)"
+        :key="st.stampId"
+        :class="$style.stampStat"
+      >
+        <span>{{ i + 1 }}.</span>
+        <img :src="st.stampImageUrl" width="32" />
+        {{ st.count }}回
+      </li>
+    </ol>
   </div>
   <div
     @click="page--"
@@ -260,6 +268,20 @@ async function handleDeleteStamp(id: string) {
   opacity: 0%;
   &:hover {
     opacity: 60%;
+  }
+}
+
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+.stampStat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  &:not(:first-child) {
+    margin-top: 4px;
   }
 }
 </style>

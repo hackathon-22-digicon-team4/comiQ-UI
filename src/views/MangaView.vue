@@ -11,6 +11,8 @@ import type {
 import MangaComponent from "../components/MangaComponent.vue";
 import MangaStampComponent from "../components/MangaStampComponent.vue";
 import axios from "axios";
+import { parseQueryParamToNumber } from "../utils/parseQueryParam";
+import { useRoute } from "vue-router";
 
 export type ShowStampMode = "me" | "others" | "all" | "none";
 
@@ -18,6 +20,7 @@ interface Props {
   mangaId: string;
 }
 const props = defineProps<Props>();
+const route = useRoute();
 
 const selectedStamp = ref<string>("");
 const isMyStampShow = ref<boolean>(true);
@@ -37,6 +40,7 @@ const stamps = ref<Stamp[]>([]);
 const bookUserStamps = ref<BookUserStamp[]>([]);
 const manga = ref<Book>({} as Book);
 const stampStatistics = ref<StampStatistics[]>([]);
+const page = parseQueryParamToNumber(route.query.page);
 
 function handleSelectStamp(stamp: string) {
   selectedStamp.value = stamp;
@@ -97,12 +101,12 @@ onMounted(async () => {
   manga.value = { ...mangaResponse.data, imageUrl: mangaResponse.data.imageUrl.slice(0, -5) };
 
   const stampStatisticsResponse = await axios.get(
-    `https://api.comiq.kyosutech.com/v1/book_user_stamp_counts?bookSeriesId=${manga.value.bookSeriesId}?bookId=${props.mangaId}`,
+    `https://api.comiq.kyosutech.com/v1/book_user_stamp_counts?bookSeriesId=${manga.value.bookSeriesId}&bookId=${props.mangaId}`,
     { withCredentials: true },
   );
   console.table(stampStatisticsResponse);
   stampStatistics.value = stampStatisticsResponse.data.bookUserStampCounts;
-  
+
   getBookUserStamps();
 });
 </script>
@@ -123,6 +127,7 @@ onMounted(async () => {
       @delete-stamp="deleteStamp($event)"
       :stamps="stamps"
       :stamp-statistics="stampStatistics"
+      :defaultPage="page"
     />
   </div>
   <div :class="$style.stampComesHere">

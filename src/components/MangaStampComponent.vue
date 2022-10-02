@@ -58,8 +58,10 @@ function closeModal() {
   }
 }
 .stampImg {
-  width: 40%;
+  width: 40px;
+  height: 40px;
 }
+
 .modalButton {
   width: 5%;
   cursor: pointer;
@@ -67,6 +69,6 @@ function closeModal() {
 }
 .container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 </style>
