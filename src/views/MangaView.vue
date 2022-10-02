@@ -127,7 +127,7 @@ onMounted(async () => {
       @delete-stamp="deleteStamp($event)"
       :stamps="stamps"
       :stamp-statistics="stampStatistics"
-      :defaultPage="page"
+      :defaultPage="Math.floor((page + 1) / 2)"
     />
   </div>
   <div :class="$style.stampComesHere">

@@ -27,7 +27,7 @@ const emit = defineEmits<{
   (event: "deleteStamp", id: string): void;
 }>();
 
-const page = ref(props.defaultPage); // 2*page, 2*page+1ページが写し出されている
+const page = ref(props.defaultPage); // 2*page, 2*page-1 ページ目が写し出されている
 const lastPage = ref(4);
 const mouseOnLeft = ref(false);
 const mouseOnRight = ref(false);
@@ -61,7 +61,7 @@ function handlePutStamp(e: MouseEvent, direction: Direction) {
   const bookUserStamp: BookUserStampRequest = {
     bookId: props.manga.id,
     bookSeriesId: props.manga.bookSeriesId,
-    pageNum: direction === "right" ? 2 * page.value : 2 * page.value + 1,
+    pageNum: direction === "right" ? 2 * page.value - 1 : 2 * page.value,
     x: x,
     y: y,
     stampId: props.selectedStamp,
