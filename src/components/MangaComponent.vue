@@ -33,12 +33,12 @@ const mouseOnLeft = ref(false);
 const mouseOnRight = ref(false);
 
 const leftStamps = computed(() => {
-  return props.bookUserStamps.filter(
-    (bookUserStamp) => bookUserStamp.pageNum === 2 * page.value + 1,
-  );
+  return props.bookUserStamps.filter((bookUserStamp) => bookUserStamp.pageNum === 2 * page.value);
 });
 const rightStamps = computed(() => {
-  return props.bookUserStamps.filter((bookUserStamp) => bookUserStamp.pageNum === 2 * page.value);
+  return props.bookUserStamps.filter(
+    (bookUserStamp) => bookUserStamp.pageNum === 2 * page.value - 1,
+  );
 });
 
 watch(
@@ -84,7 +84,7 @@ async function handleDeleteStamp(id: string) {
 
 <template>
   <div
-    @click="handleClick($event, 'right')"
+    @click="handleClick($event, 'left')"
     v-if="manga && 0 < page && page < lastPage / 2"
     :class="$style.manga"
   >
@@ -133,7 +133,7 @@ async function handleDeleteStamp(id: string) {
   </div>
   <div @click="page++" v-else :class="[$style.manga, $style.lastPage]">つぎの巻に進む</div>
   <div
-    @click="handleClick($event, 'left')"
+    @click="handleClick($event, 'right')"
     v-if="manga && 0 < page && page < lastPage / 2"
     :class="$style.manga"
   >
