@@ -111,7 +111,7 @@ async function handleDeleteStamp(id: string) {
         alt=""
         width="32"
       />
-      <button @click="handleDeleteStamp(stamp.id)" :class="$style.deleteButton">
+      <button @click.stop="handleDeleteStamp(stamp.id)" :class="$style.deleteButton">
         <XMarkIcon :class="$style.icon" />
       </button>
     </div>
@@ -160,7 +160,7 @@ async function handleDeleteStamp(id: string) {
         alt=""
         width="32"
       />
-      <button @click="handleDeleteStamp(stamp.id)" :class="$style.deleteButton">
+      <button @click.stop="handleDeleteStamp(stamp.id)" :class="$style.deleteButton">
         <XMarkIcon :class="$style.icon" />
       </button>
     </div>
@@ -242,7 +242,7 @@ async function handleDeleteStamp(id: string) {
 }
 
 .stamp {
-  position: fixed;
+  position: absolute;
   width: 32px;
   height: 32px;
   background-color: white;
