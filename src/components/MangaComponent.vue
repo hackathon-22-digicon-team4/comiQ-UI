@@ -84,7 +84,7 @@ async function handleDeleteStamp(id: string) {
 
 <template>
   <div
-    @click="handleClick($event, 'left')"
+    @click="handleClick($event, 'right')"
     v-if="manga && 0 < page && page < lastPage / 2"
     :class="$style.manga"
   >
@@ -133,7 +133,7 @@ async function handleDeleteStamp(id: string) {
   </div>
   <div @click="page++" v-else :class="[$style.manga, $style.lastPage]">つぎの巻に進む</div>
   <div
-    @click="handleClick($event, 'right')"
+    @click="handleClick($event, 'left')"
     v-if="manga && 0 < page && page < lastPage / 2"
     :class="$style.manga"
   >
