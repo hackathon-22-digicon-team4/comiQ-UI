@@ -57,13 +57,13 @@ function movePage(direction: Direction) {
 }
 
 function handlePutStamp(e: MouseEvent, direction: Direction) {
-  const { x, y } = e;
+  const { offsetX, offsetY } = e;
   const bookUserStamp: BookUserStampRequest = {
     bookId: props.manga.id,
     bookSeriesId: props.manga.bookSeriesId,
     pageNum: direction === "right" ? 2 * page.value - 1 : 2 * page.value,
-    x: x,
-    y: y,
+    x: offsetX,
+    y: offsetY,
     stampId: props.selectedStamp,
   };
   emit("addStamp", bookUserStamp);
